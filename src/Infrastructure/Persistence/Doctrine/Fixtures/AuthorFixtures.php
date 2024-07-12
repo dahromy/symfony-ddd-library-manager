@@ -10,7 +10,7 @@ use Faker\Factory;
 
 class AuthorFixtures extends Fixture
 {
-    private $authorRepository;
+    private AuthorRepositoryInterface $authorRepository;
 
     public function __construct(AuthorRepositoryInterface $authorRepository)
     {

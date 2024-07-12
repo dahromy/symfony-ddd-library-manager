@@ -19,7 +19,7 @@ class BookController extends AbstractController
         $this->bookUseCase = $bookUseCase;
     }
 
-    #[Route('/books', name: 'create_book', methods: ['GET', 'POST'])]
+    #[Route('/books/create', name: 'create_book', methods: ['GET', 'POST'])]
     public function createBook(Request $request): Response
     {
         $form = $this->createForm(BookType::class);
@@ -27,7 +27,8 @@ class BookController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $book = $this->bookUseCase->createBook($data['title'], $data['isbn'], $data['authorId']);
+
+            $book = $this->bookUseCase->createBook($data['title'], $data['isbn'], $data['author']->getId());
             $this->addFlash('success', 'Book created successfully');
             return $this->redirectToRoute('get_all_books');
         }
@@ -37,7 +38,7 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/books/{id}', name: 'update_book', methods: ['GET', 'POST'])]
+    #[Route('/books/{id}/update', name: 'update_book', methods: ['GET', 'POST'])]
     public function updateBook(int $id, Request $request): Response
     {
         $book = $this->bookUseCase->getBook($id);
@@ -57,7 +58,7 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/books/{id}', name: 'delete_book', methods: ['DELETE'])]
+    #[Route('/books/{id}/delete', name: 'delete_book', methods: ['DELETE'])]
     public function deleteBook(int $id): JsonResponse
     {
         $this->bookUseCase->deleteBook($id);
