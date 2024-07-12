@@ -11,22 +11,27 @@ class BookRepository extends ServiceEntityRepository implements BookRepositoryIn
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Book::class);
+        parent::__construct($registry, BookEntity::class);
     }
 
     public function findById(int $id): ?Book
     {
-        return $this->find($id);
+        $bookEntity = $this->find($id);
+        return $bookEntity ? $bookEntity->toDomainEntity() : null;
     }
 
     public function findAll(): array
     {
-        return $this->findBy([]);
+        return array_map(
+            fn(BookEntity $bookEntity) => $bookEntity->toDomainEntity(),
+            $this->findBy([])
+        );
     }
 
     public function save(Book $book): void
     {
-        $this->getEntityManager()->persist($book);
+        $bookEntity = new BookEntity($book);
+        $this->getEntityManager()->persist($bookEntity);
         $this->getEntityManager()->flush();
     }
 

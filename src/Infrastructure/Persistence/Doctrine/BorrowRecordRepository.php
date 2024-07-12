@@ -11,22 +11,27 @@ class BorrowRecordRepository extends ServiceEntityRepository implements BorrowRe
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, BorrowRecord::class);
+        parent::__construct($registry, BorrowRecordEntity::class);
     }
 
     public function findById(int $id): ?BorrowRecord
     {
-        return $this->find($id);
+        $borrowRecordEntity = $this->find($id);
+        return $borrowRecordEntity ? $borrowRecordEntity->toDomainEntity() : null;
     }
 
     public function findAll(): array
     {
-        return $this->findBy([]);
+        return array_map(
+            fn(BorrowRecordEntity $borrowRecordEntity) => $borrowRecordEntity->toDomainEntity(),
+            $this->findBy([])
+        );
     }
 
     public function save(BorrowRecord $borrowRecord): void
     {
-        $this->getEntityManager()->persist($borrowRecord);
+        $borrowRecordEntity = new BorrowRecordEntity($borrowRecord);
+        $this->getEntityManager()->persist($borrowRecordEntity);
         $this->getEntityManager()->flush();
     }
 

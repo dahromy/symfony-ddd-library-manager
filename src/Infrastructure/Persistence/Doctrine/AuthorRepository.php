@@ -11,22 +11,27 @@ class AuthorRepository extends ServiceEntityRepository implements AuthorReposito
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Author::class);
+        parent::__construct($registry, AuthorEntity::class);
     }
 
     public function findById(int $id): ?Author
     {
-        return $this->find($id);
+        $authorEntity = $this->find($id);
+        return $authorEntity ? $authorEntity->toDomainEntity() : null;
     }
 
     public function findAll(): array
     {
-        return $this->findBy([]);
+        return array_map(
+            fn(AuthorEntity $authorEntity) => $authorEntity->toDomainEntity(),
+            $this->findBy([])
+        );
     }
 
     public function save(Author $author): void
     {
-        $this->getEntityManager()->persist($author);
+        $authorEntity = new AuthorEntity($author);
+        $this->getEntityManager()->persist($authorEntity);
         $this->getEntityManager()->flush();
     }
 
