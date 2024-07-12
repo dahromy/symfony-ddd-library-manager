@@ -2,14 +2,23 @@
 
 namespace App\Form;
 
+use App\Domain\Entity\Author;
+use App\Domain\Repository\AuthorRepositoryInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BookType extends AbstractType
 {
+    private $authorRepository;
+
+    public function __construct(AuthorRepositoryInterface $authorRepository)
+    {
+        $this->authorRepository = $authorRepository;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -21,8 +30,11 @@ class BookType extends AbstractType
                 'attr' => ['class' => 'form-input mt-1 block w-full'],
                 'label_attr' => ['class' => 'block text-sm font-medium text-gray-700'],
             ])
-            ->add('authorId', IntegerType::class, [
-                'attr' => ['class' => 'form-input mt-1 block w-full'],
+            ->add('author', EntityType::class, [
+                'class' => Author::class,
+                'choice_label' => 'name',
+                'choices' => $this->authorRepository->findAll(),
+                'attr' => ['class' => 'form-select mt-1 block w-full'],
                 'label_attr' => ['class' => 'block text-sm font-medium text-gray-700'],
             ]);
     }
