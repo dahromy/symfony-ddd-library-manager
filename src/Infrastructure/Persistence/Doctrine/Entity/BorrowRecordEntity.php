@@ -28,18 +28,46 @@ class BorrowRecordEntity
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTime $returnDate = null;
 
-    public function __construct(BorrowRecord $borrowRecord)
+    public function __construct(BookEntity $book, string $borrowerName, DateTime $borrowDate)
     {
-        $this->borrowerName = $borrowRecord->getBorrowerName();
-        $this->borrowDate = $borrowRecord->getBorrowDate();
-        $this->returnDate = $borrowRecord->getReturnDate();
-        // Note: We'll need to handle the book separately
+        $this->book = $book;
+        $this->borrowerName = $borrowerName;
+        $this->borrowDate = $borrowDate;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getBook(): BookEntity
+    {
+        return $this->book;
+    }
+
+    public function getBorrowerName(): string
+    {
+        return $this->borrowerName;
+    }
+
+    public function getBorrowDate(): DateTime
+    {
+        return $this->borrowDate;
+    }
+
+    public function getReturnDate(): ?DateTime
+    {
+        return $this->returnDate;
+    }
+
+    public function setReturnDate(DateTime $returnDate): void
+    {
+        $this->returnDate = $returnDate;
     }
 
     public function toDomainEntity(): BorrowRecord
     {
         $borrowRecord = new BorrowRecord($this->book->toDomainEntity(), $this->borrowerName, $this->borrowDate);
-        // We need to set the ID and return date manually as they're not part of the constructor
         $reflection = new \ReflectionClass($borrowRecord);
         $idProperty = $reflection->getProperty('id');
         $idProperty->setAccessible(true);
@@ -50,5 +78,22 @@ class BorrowRecordEntity
         }
         
         return $borrowRecord;
+    }
+
+    public static function fromDomainEntity(Borrow
+Record $borrowRecord): self
+    {
+        $bookEntity = BookEntity::fromDomainEntity($borrowRecord->getBook());
+        $borrowRecordEntity = new self($bookEntity, $borrowRecord->getBorrowerName(), $borrowRecord->getBorrowDate());
+        if ($borrowRecord->getId() !== null) {
+            $reflection = new \ReflectionClass($borrowRecordEntity);
+            $property = $reflection->getProperty('id');
+            $property->setAccessible(true);
+            $property->setValue($borrowRecordEntity, $borrowRecord->getId());
+        }
+        if ($borrowRecord->getReturnDate() !== null) {
+            $borrowRecordEntity->setReturnDate($borrowRecord->getReturnDate());
+        }
+        return $borrowRecordEntity;
     }
 }
