@@ -2,11 +2,24 @@
 
 namespace App\Domain\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
+#[ORM\Entity]
+#[ORM\Table(name: 'authors')]
 class Author
 {
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private int $id;
+
+    #[ORM\Column(type: 'string', length: 255)]
     private string $name;
-    private array $books = [];
+
+    #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'author')]
+    private Collection $books;
 
     public function __construct(string $name)
     {
@@ -28,21 +41,30 @@ class Author
         $this->name = $name;
     }
 
-    public function getBooks(): array
+    public function getBooks(): Collection
     {
         return $this->books;
     }
 
-    public function addBook(Book $book): void
+    public function addBook(Book $book): self
     {
-        $this->books[] = $book;
+        if (!$this->books->contains($book)) {
+            $this->books[] = $book;
+            $book->setAuthor($this);
+        }
+
+        return $this;
     }
 
-    public function removeBook(Book $book): void
+    public function removeBook(Book $book): self
     {
-        $key = array_search($book, $this->books, true);
-        if ($key !== false) {
-            unset($this->books[$key]);
+        if ($this->books->removeElement($book)) {
+            // set the owning side to null (unless already changed)
+            if ($book->getAuthor() === $this) {
+                $book->setAuthor(null);
+            }
         }
+
+        return $this;
     }
 }
