@@ -16,6 +16,9 @@ class AuthorUseCase
 
     public function createAuthor(string $name): Author
     {
+        if (empty(trim($name))) {
+            throw new \InvalidArgumentException("Author name cannot be empty");
+        }
         $author = new Author($name);
         $this->authorRepository->save($author);
         return $author;
@@ -25,7 +28,11 @@ class AuthorUseCase
     {
         $author = $this->authorRepository->findById($id);
         if (!$author) {
-            throw new \Exception("Author not found");
+            throw new \RuntimeException("Author not found");
+        }
+
+        if (empty(trim($name))) {
+            throw new \InvalidArgumentException("Author name cannot be empty");
         }
 
         $author->setName($name);

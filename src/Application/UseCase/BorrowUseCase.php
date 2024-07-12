@@ -22,7 +22,11 @@ class BorrowUseCase
     {
         $book = $this->bookRepository->findById($bookId);
         if (!$book) {
-            throw new \Exception("Book not found");
+            throw new \RuntimeException("Book not found");
+        }
+
+        if (empty(trim($borrowerName))) {
+            throw new \InvalidArgumentException("Borrower name cannot be empty");
         }
 
         $borrowRecord = new BorrowRecord($book, $borrowerName, new DateTime());
