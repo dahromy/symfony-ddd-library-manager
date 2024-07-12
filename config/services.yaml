@@ -19,5 +19,17 @@ services:
             - '../src/Domain/'
             - '../src/Kernel.php'
 
+    # Explicitly configure Application layer
+    App\Application\:
+        resource: '../src/Application/'
+        autowire: true
+        autoconfigure: true
+
+    # Explicitly configure Infrastructure layer
+    App\Infrastructure\:
+        resource: '../src/Infrastructure/'
+        autowire: true
+        autoconfigure: true
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
