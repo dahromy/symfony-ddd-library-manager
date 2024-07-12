@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Framework\Controller;
 
 use App\Application\UseCase\BookUseCase;
-use App\Form\BookType;
+use App\Infrastructure\Framework\Form\BookType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
