@@ -4,6 +4,7 @@ namespace App\Infrastructure\Persistence\Doctrine;
 
 use App\Domain\Entity\Author;
 use App\Domain\Repository\AuthorRepositoryInterface;
+use App\Infrastructure\Persistence\Doctrine\Entity\AuthorEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
