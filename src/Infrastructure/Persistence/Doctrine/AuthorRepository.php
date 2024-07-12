@@ -31,14 +31,21 @@ class AuthorRepository extends ServiceEntityRepository implements AuthorReposito
 
     public function save(Author $author): void
     {
-        $authorEntity = new AuthorEntity($author);
+        $authorEntity = $this->getEntityManager()->find(AuthorEntity::class, $author->getId()) 
+            ?? AuthorEntity::fromDomainEntity($author);
+        
+        $authorEntity->setName($author->getName());
+        
         $this->getEntityManager()->persist($authorEntity);
         $this->getEntityManager()->flush();
     }
 
     public function delete(Author $author): void
     {
-        $this->getEntityManager()->remove($author);
-        $this->getEntityManager()->flush();
+        $authorEntity = $this->getEntityManager()->find(AuthorEntity::class, $author->getId());
+        if ($authorEntity) {
+            $this->getEntityManager()->remove($authorEntity);
+            $this->getEntityManager()->flush();
+        }
     }
 }
