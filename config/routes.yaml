@@ -11,3 +11,7 @@ book_routes:
 author_routes:
     resource: ../src/Infrastructure/Framework/Controller/AuthorController.php
     type: annotation
+
+borrow_routes:
+    resource: ../src/Infrastructure/Framework/Controller/BorrowController.php
+    type: annotation

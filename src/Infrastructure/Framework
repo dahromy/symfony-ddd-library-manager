@@ -1,5 +1,0 @@
-<?php
-
-namespace App\Infrastructure\Framework;
-
-// This directory will contain framework-specific code
