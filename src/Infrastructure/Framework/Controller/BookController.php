@@ -3,9 +3,11 @@
 namespace App\Infrastructure\Framework\Controller;
 
 use App\Application\UseCase\BookUseCase;
+use App\Form\BookType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class BookController extends AbstractController
@@ -17,20 +19,42 @@ class BookController extends AbstractController
         $this->bookUseCase = $bookUseCase;
     }
 
-    #[Route('/books', name: 'create_book', methods: ['POST'])]
-    public function createBook(Request $request): JsonResponse
+    #[Route('/books', name: 'create_book', methods: ['GET', 'POST'])]
+    public function createBook(Request $request): Response
     {
-        $data = json_decode($request->getContent(), true);
-        $book = $this->bookUseCase->createBook($data['title'], $data['isbn'], $data['authorId']);
-        return $this->json($book);
+        $form = $this->createForm(BookType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $book = $this->bookUseCase->createBook($data['title'], $data['isbn'], $data['authorId']);
+            $this->addFlash('success', 'Book created successfully');
+            return $this->redirectToRoute('get_all_books');
+        }
+
+        return $this->render('book/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
-    #[Route('/books/{id}', name: 'update_book', methods: ['PUT'])]
-    public function updateBook(int $id, Request $request): JsonResponse
+    #[Route('/books/{id}', name: 'update_book', methods: ['GET', 'POST'])]
+    public function updateBook(int $id, Request $request): Response
     {
-        $data = json_decode($request->getContent(), true);
-        $book = $this->bookUseCase->updateBook($id, $data['title'], $data['isbn'], $data['authorId']);
-        return $this->json($book);
+        $book = $this->bookUseCase->getBook($id);
+        $form = $this->createForm(BookType::class, $book);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $this->bookUseCase->updateBook($id, $data['title'], $data['isbn'], $data['authorId']);
+            $this->addFlash('success', 'Book updated successfully');
+            return $this->redirectToRoute('get_all_books');
+        }
+
+        return $this->render('book/edit.html.twig', [
+            'form' => $form->createView(),
+            'book' => $book,
+        ]);
     }
 
     #[Route('/books/{id}', name: 'delete_book', methods: ['DELETE'])]
@@ -41,16 +65,20 @@ class BookController extends AbstractController
     }
 
     #[Route('/books/{id}', name: 'get_book', methods: ['GET'])]
-    public function getBook(int $id): JsonResponse
+    public function getBook(int $id): Response
     {
         $book = $this->bookUseCase->getBook($id);
-        return $this->json($book);
+        return $this->render('book/show.html.twig', [
+            'book' => $book,
+        ]);
     }
 
     #[Route('/books', name: 'get_all_books', methods: ['GET'])]
-    public function getAllBooks(): JsonResponse
+    public function getAllBooks(): Response
     {
         $books = $this->bookUseCase->getAllBooks();
-        return $this->json($books);
+        return $this->render('book/index.html.twig', [
+            'books' => $books,
+        ]);
     }
 }
