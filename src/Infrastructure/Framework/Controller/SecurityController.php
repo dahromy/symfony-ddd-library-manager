@@ -4,9 +4,14 @@ namespace App\Infrastructure\Framework\Controller;
 
 use App\Application\UseCase\UserUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class SecurityController extends AbstractController
 {
@@ -36,10 +41,31 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(): Response
+    public function register(Request $request): Response
     {
-        // TODO: Implement user registration logic using UserUseCase
-        // This is a placeholder - you'll need to create a form and handle the registration process
-        return $this->render('security/register.html.twig');
+        $form = $this->createFormBuilder()
+            ->add('email', EmailType::class)
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'first_options'  => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat Password'],
+            ])
+            ->add('register', SubmitType::class, ['label' => 'Register'])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $user = $this->userUseCase->createUser($data['email'], $data['password']);
+
+            // You might want to log in the user automatically after registration
+            // or redirect them to the login page
+            return $this->redirectToRoute('app_login');
+        }
+
+        return $this->render('security/register.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

@@ -26,6 +26,12 @@
                                 <div class="hidden md:block">
                                     <div class="ml-10 flex items-baseline space-x-4">
                                         <a href="{{ path('get_all_books') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Book Management</a>
+                                        {% if app.user %}
+                                            <a href="{{ path('app_logout') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Logout</a>
+                                        {% else %}
+                                            <a href="{{ path('app_login') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Login</a>
+                                            <a href="{{ path('app_register') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Register</a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

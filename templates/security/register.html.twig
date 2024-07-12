@@ -5,6 +5,10 @@
 {% block body %}
     <h1>Register</h1>
 
-    {# TODO: Implement registration form #}
-    <p>Registration form will be implemented here.</p>
+    {{ form_start(form) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.password.first) }}
+        {{ form_row(form.password.second) }}
+        {{ form_row(form.register) }}
+    {{ form_end(form) }}
 {% endblock %}
