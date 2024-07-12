@@ -15,11 +15,11 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            form_login:
-                login_path: app_login
-                check_path: app_login
+            custom_authenticator: App\Infrastructure\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
+                # where to redirect after logout
+                target: app_login
 
     access_control:
         - { path: ^/login, roles: PUBLIC_ACCESS }
