@@ -1,5 +1,0 @@
-<?php
-
-namespace App\Domain\Entity;
-
-// This directory will contain domain entities

@@ -1,5 +1,0 @@
-<?php
-
-namespace App\Application\UseCase;
-
-// This directory will contain use case interfaces and implementations

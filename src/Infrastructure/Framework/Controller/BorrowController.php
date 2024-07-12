@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Framework\Controller;
 
-use App\UseCase\BorrowUseCase;
+use App\Application\UseCase\BorrowUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

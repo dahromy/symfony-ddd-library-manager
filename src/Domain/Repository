@@ -1,5 +1,0 @@
-<?php
-
-namespace App\Domain\Repository;
-
-// This directory will contain repository interfaces
