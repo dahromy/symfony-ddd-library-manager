@@ -6,12 +6,12 @@ controllers:
 
 book_routes:
     resource: ../src/Infrastructure/Framework/Controller/BookController.php
-    type: annotation
+    type: attribute
 
 author_routes:
     resource: ../src/Infrastructure/Framework/Controller/AuthorController.php
-    type: annotation
+    type: attribute
 
 borrow_routes:
     resource: ../src/Infrastructure/Framework/Controller/BorrowController.php
-    type: annotation
+    type: attribute
