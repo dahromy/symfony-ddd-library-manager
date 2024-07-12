@@ -3,28 +3,13 @@
 namespace App\Domain\Entity;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
-#[ORM\Table(name: 'borrow_records')]
 class BorrowRecord
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private int $id;
-
-    #[ORM\ManyToOne(targetEntity: Book::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    private ?int $id = null;
     private Book $book;
-
-    #[ORM\Column(type: 'string', length: 255)]
     private string $borrowerName;
-
-    #[ORM\Column(type: 'datetime')]
     private DateTime $borrowDate;
-
-    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTime $returnDate = null;
 
     public function __construct(Book $book, string $borrowerName, DateTime $borrowDate)
@@ -34,7 +19,7 @@ class BorrowRecord
         $this->borrowDate = $borrowDate;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
