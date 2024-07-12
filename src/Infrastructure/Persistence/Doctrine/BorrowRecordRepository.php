@@ -21,7 +21,7 @@ class BorrowRecordRepository extends ServiceEntityRepository implements BorrowRe
 
     public function findAll(): array
     {
-        return parent::findAll();
+        return $this->findBy([]);
     }
 
     public function save(BorrowRecord $borrowRecord): void

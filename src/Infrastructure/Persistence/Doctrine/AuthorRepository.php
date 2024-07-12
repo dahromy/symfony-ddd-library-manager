@@ -21,7 +21,7 @@ class AuthorRepository extends ServiceEntityRepository implements AuthorReposito
 
     public function findAll(): array
     {
-        return parent::findAll();
+        return $this->findBy([]);
     }
 
     public function save(Author $author): void

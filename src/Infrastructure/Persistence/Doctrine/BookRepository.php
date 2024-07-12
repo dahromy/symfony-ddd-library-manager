@@ -21,7 +21,7 @@ class BookRepository extends ServiceEntityRepository implements BookRepositoryIn
 
     public function findAll(): array
     {
-        return parent::findAll();
+        return $this->findBy([]);
     }
 
     public function save(Book $book): void
