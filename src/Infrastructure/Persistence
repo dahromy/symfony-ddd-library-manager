@@ -1,5 +1,0 @@
-<?php
-
-namespace App\Infrastructure\Persistence;
-
-// This directory will contain repository implementations

@@ -31,5 +31,15 @@ services:
         autowire: true
         autoconfigure: true
 
+    # Configure concrete repository implementations
+    App\Domain\Repository\AuthorRepositoryInterface:
+        class: App\Infrastructure\Persistence\Doctrine\AuthorRepository
+
+    App\Domain\Repository\BookRepositoryInterface:
+        class: App\Infrastructure\Persistence\Doctrine\BookRepository
+
+    App\Domain\Repository\BorrowRecordRepositoryInterface:
+        class: App\Infrastructure\Persistence\Doctrine\BorrowRecordRepository
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
