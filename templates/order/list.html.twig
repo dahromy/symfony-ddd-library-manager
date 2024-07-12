@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order List{% endblock %}
+
+{% block body %}
+    <h1>Order List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Customer Name</th>
+                <th>Address</th>
+                <th>Status</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.customerName }}</td>
+                <td>{{ order.address }}</td>
+                <td>{{ order.status }}</td>
+                <td>{{ order.createdAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('order_create') }}">Create New Order</a>
+{% endblock %}
