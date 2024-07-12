@@ -7,6 +7,7 @@
 /public/bundles/
 /var/
 /vendor/
+/assets/vendor/
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
@@ -60,6 +61,3 @@ composer.phar
 
 # PHPStorm
 .phpstorm.meta.php
-
-# Ignore vendor directory inside assets
-/assets/vendor/
