@@ -1,5 +1,13 @@
 controllers:
     resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+        path: ../src/Infrastructure/Framework/Controller/
+        namespace: App\Infrastructure\Framework\Controller
     type: attribute
+
+book_routes:
+    resource: ../src/Infrastructure/Framework/Controller/BookController.php
+    type: annotation
+
+author_routes:
+    resource: ../src/Infrastructure/Framework/Controller/AuthorController.php
+    type: annotation
