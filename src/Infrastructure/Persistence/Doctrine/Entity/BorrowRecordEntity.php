@@ -80,8 +80,7 @@ class BorrowRecordEntity
         return $borrowRecord;
     }
 
-    public static function fromDomainEntity(Borrow
-Record $borrowRecord): self
+    public static function fromDomainEntity(BorrowRecord $borrowRecord): self
     {
         $bookEntity = BookEntity::fromDomainEntity($borrowRecord->getBook());
         $borrowRecordEntity = new self($bookEntity, $borrowRecord->getBorrowerName(), $borrowRecord->getBorrowDate());
