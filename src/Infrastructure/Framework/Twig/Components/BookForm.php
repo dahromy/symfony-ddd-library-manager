@@ -24,10 +24,6 @@ class BookForm extends AbstractController
 
     protected function instantiateForm(): FormInterface
     {
-        return $this->createForm(BookType::class, [
-            'title' => $this->book?->getTitle(),
-            'isbn' => $this->book?->getIsbn(),
-            'author' => $this->book?->getAuthor(),
-        ]);
+        return $this->createForm(BookType::class, $this->book);
     }
 }

@@ -10,14 +10,12 @@
                     Create New Book
                 </h2>
             </div>
-            <turbo-frame id="book-form">
-                {{ component('book_form', {
-                    book: book,
-                    submitLabel: 'Create Book'
-                }) }}
-            </turbo-frame>
+            {{ component('book_form', {
+                book: book,
+                submitLabel: 'Create Book'
+            }) }}
             <div class="text-sm text-center">
-                <a href="{{ path('get_all_books') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
+                <a href="{{ path('app_book_index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
                     Back to list
                 </a>
             </div>

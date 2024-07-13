@@ -62,6 +62,7 @@ class BorrowType extends AbstractType
         $resolver->setDefaults([
             'data_class' => BorrowRecord::class,
         ]);
+
         $resolver->setRequired('book_repository');
     }
 }

@@ -11,6 +11,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Validator\Constraints\Isbn;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Type;
 
 class BookType extends AbstractType
 {
@@ -18,25 +23,40 @@ class BookType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => 'Book Title',
-                'attr' => [
-                    'placeholder' => 'Enter book title',
-                    'class' => 'form-control',
+                'attr' => ['class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm', 'placeholder' => 'Enter book title'],
+                'label' => 'Title',
+                'label_attr' => ['class' => 'sr-only'],
+                'constraints' => [
+                    new NotBlank(['message' => 'Please enter a title']),
+                    new NotNull(['message' => 'Please enter a title']),
+                    new Length(['min' => 2, 'max' => 255, 'minMessage' => 'The title must be at least {{ limit }} characters long', 'maxMessage' => 'The title cannot be longer than {{ limit }} characters']),
                 ],
             ])
             ->add('isbn', TextType::class, [
+                'attr' => ['class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm', 'placeholder' => 'Enter ISBN'],
                 'label' => 'ISBN',
-                'attr' => [
-                    'placeholder' => 'Enter ISBN',
-                    'class' => 'form-control',
+                'label_attr' => ['class' => 'sr-only'],
+                'constraints' => [
+                    new NotBlank(['message' => 'Please enter an ISBN']),
+                    new NotNull(['message' => 'Please enter an ISBN']),
+                    new Isbn(['message' => 'This is not a valid ISBN']),
                 ],
             ])
             ->add('author', EntityType::class, [
                 'class' => Author::class,
                 'choice_label' => 'name',
+                'attr' => ['class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'],
                 'label' => 'Author',
+                'label_attr' => ['class' => 'sr-only'],
                 'placeholder' => 'Select an author',
-                'attr' => ['class' => 'form-control'],
+                'constraints' => [
+                    new NotBlank(['message' => 'Please select an author']),
+                    new NotNull(['message' => 'Please select an author']),
+                    new Type([
+                        'type' => Author::class,
+                        'message' => 'The selected author is invalid',
+                    ])
+                ]
             ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -46,25 +66,29 @@ class BookType extends AbstractType
             // Check if this is a new Book (no id set)
             if (!$book || null === $book->getId()) {
                 $form->add('title', TextType::class, [
-                    'label' => 'Book Title',
-                    'attr' => [
-                        'placeholder' => 'Enter book title',
-                        'class' => 'form-control',
-                    ],
+                    'attr' => ['class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm', 'placeholder' => 'Enter book title'],
+                    'label' => 'Title',
+                    'label_attr' => ['class' => 'sr-only'],
                     'empty_data' => '',
-                ]);
-                $form->add('isbn', TextType::class, [
-                    'label' => 'ISBN',
-                    'attr' => [
-                        'placeholder' => 'Enter ISBN',
-                        'class' => 'form-control',
+                    'constraints' => [
+                        new NotBlank(['message' => 'Please enter a title']),
+                        new NotNull(['message' => 'Please enter a title']),
+                        new Length(['min' => 2, 'max' => 255, 'minMessage' => 'The title must be at least {{ limit }} characters long', 'maxMessage' => 'The title cannot be longer than {{ limit }} characters']),
                     ],
-                    'empty_data' => '',
-                ]);
+                ])
+                    ->add('isbn', TextType::class, [
+                        'attr' => ['class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm', 'placeholder' => 'Enter ISBN'],
+                        'label' => 'ISBN',
+                        'label_attr' => ['class' => 'sr-only'],
+                        'empty_data' => '',
+                        'constraints' => [
+                            new NotBlank(['message' => 'Please enter an ISBN']),
+                            new NotNull(['message' => 'Please enter an ISBN']),
+                            new Isbn(['message' => 'This is not a valid ISBN']),
+                        ],
+                    ]);
             }
         });
-
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'onPreSubmit']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -79,25 +103,5 @@ class BookType extends AbstractType
                 );
             },
         ]);
-    }
-
-    public function onPreSubmit(FormEvent $event)
-    {
-        $data = $event->getData();
-        
-        // Ensure ISBN is not null
-        if (!isset($data['isbn']) || $data['isbn'] === null) {
-            $data['isbn'] = '';
-        }
-
-        // Trim whitespace from title and ISBN
-        if (isset($data['title'])) {
-            $data['title'] = trim($data['title']);
-        }
-        if (isset($data['isbn'])) {
-            $data['isbn'] = trim($data['isbn']);
-        }
-
-        $event->setData($data);
     }
 }
