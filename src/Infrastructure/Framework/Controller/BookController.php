@@ -3,6 +3,8 @@
 namespace App\Infrastructure\Framework\Controller;
 
 use App\Application\UseCase\BookUseCase;
+use App\Domain\Entity\Author;
+use App\Domain\Entity\Book;
 use App\Infrastructure\Framework\Form\BookType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
