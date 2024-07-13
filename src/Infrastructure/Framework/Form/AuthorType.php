@@ -16,11 +16,14 @@ class AuthorType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
+                'attr' => ['class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm', 'placeholder' => 'Enter author name'],
                 'label' => 'Author Name',
+                'label_attr' => ['class' => 'sr-only'],
                 'empty_data' => '',
-                'attr' => [
-                    'placeholder' => 'Enter author name',
-                    'class' => 'form-control',
+                'constraints' => [
+                    new NotBlank(['message' => 'Please enter an author name']),
+                    new NotNull(['message' => 'Please enter an author name']),
+                    new Length(['min' => 2, 'max' => 255, 'minMessage' => 'The author name must be at least {{ limit }} characters long', 'maxMessage' => 'The author name cannot be longer than {{ limit }} characters']),
                 ],
             ]);
     }
@@ -30,7 +33,8 @@ class AuthorType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Author::class,
             'empty_data' => function ($form) {
-                return new Author($form->get('name')->getData() ?: '');
+                $name = $form->get('name')->getData();
+                return $name !== null ? new Author($name) : null;
             },
         ]);
     }
