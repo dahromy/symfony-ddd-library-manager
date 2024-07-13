@@ -43,7 +43,7 @@
             {% block main %}
                 <main>
                     <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-                        <div class="{% if app.request.get('_route') starts with 'get_all_books' %}w-full{% else %}flex justify-center items-center min-h-[calc(100vh-7rem)]{% endif %}">
+                        <div class="w-full">
                             {% block body %}{% endblock %}
                         </div>
                     </div>
