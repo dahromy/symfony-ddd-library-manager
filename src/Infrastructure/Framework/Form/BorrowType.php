@@ -7,9 +7,12 @@ use App\Domain\Entity\Book;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 
 class BorrowType extends AbstractType
 {
@@ -26,7 +29,26 @@ class BorrowType extends AbstractType
             ])
             ->add('borrowerName', TextType::class, [
                 'label' => 'Borrower Name',
+            ])
+            ->add('borrowDate', DateType::class, [
+                'label' => 'Borrow Date',
+                'widget' => 'single_text',
+                'data' => new \DateTime(),
             ]);
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            $data = $event->getData();
+            $form = $event->getForm();
+
+            if (!$form->getData() instanceof BorrowRecord) {
+                $borrowRecord = new BorrowRecord(
+                    $form->get('book')->getData(),
+                    $data['borrowerName'],
+                    new \DateTime($data['borrowDate'])
+                );
+                $form->setData($borrowRecord);
+            }
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void
