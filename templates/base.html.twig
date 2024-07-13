@@ -20,7 +20,7 @@
         {% endblock %}
     </head>
     <body class="h-full antialiased" data-turbo="true">
-        <div class="min-h-full flex flex-col">
+        <div class="min-h-full">
             {% block header %}
                 <nav class="bg-indigo-600">
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -55,17 +55,22 @@
             {% endblock %}
 
             {% block main %}
-                <main class="flex-grow">
+                <main>
                     <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-                        <div class="w-full">
-                            {% block body %}{% endblock %}
-                        </div>
+                        {% for label, messages in app.flashes %}
+                            {% for message in messages %}
+                                <div class="mb-4 px-4 py-3 rounded-md {% if label == 'success' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        {% block body %}{% endblock %}
                     </div>
                 </main>
             {% endblock %}
 
             {% block footer %}
-                <footer class="bg-gray-800 text-white py-4">
+                <footer class="bg-gray-800 text-white py-4 mt-auto">
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <p class="text-center">&copy; {{ "now"|date("Y") }} Our Library. All rights reserved.</p>
                     </div>
