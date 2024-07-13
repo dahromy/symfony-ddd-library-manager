@@ -3,10 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <title>{% block title %}Welcome to Our Library{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>📚</text></svg>">
         {% block stylesheets %}
             {{ importmap('app') }}
+            <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
         {% endblock %}
 
         {% block javascripts %}
@@ -21,25 +22,33 @@
         {% endblock %}
     </head>
     <body class="h-full antialiased" data-turbo="true">
-        <div class="min-h-full">
+        <div class="min-h-full flex flex-col">
             {% block header %}
-                <nav class="bg-gray-800">
+                <nav class="bg-indigo-600">
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div class="flex h-16 items-center justify-between">
                             <div class="flex items-center">
                                 <div class="flex-shrink-0">
-                                    <img class="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+                                    <a href="{{ path('home') }}" class="text-white font-bold text-xl">📚 Our Library</a>
                                 </div>
                                 <div class="hidden md:block">
                                     <div class="ml-10 flex items-baseline space-x-4">
-                                        <a href="{{ path('get_all_books') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Book Management</a>
-                                        {% if app.user %}
-                                            <a href="{{ path('app_logout') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Logout</a>
-                                        {% else %}
-                                            <a href="{{ path('app_login') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Login</a>
-                                            <a href="{{ path('app_register') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Register</a>
-                                        {% endif %}
+                                        <a href="{{ path('home') }}" class="text-white hover:bg-indigo-500 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Home</a>
+                                        <a href="{{ path('get_all_books') }}" class="text-white hover:bg-indigo-500 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Books</a>
+                                        <a href="{{ path('get_all_authors') }}" class="text-white hover:bg-indigo-500 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Authors</a>
+                                        <a href="{{ path('get_all_borrow_records') }}" class="text-white hover:bg-indigo-500 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Borrow Records</a>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="hidden md:block">
+                                <div class="ml-4 flex items-center md:ml-6">
+                                    {% if app.user %}
+                                        <span class="text-white mr-4">Welcome, {{ app.user.email }}</span>
+                                        <a href="{{ path('app_logout') }}" class="text-white bg-indigo-500 hover:bg-indigo-400 rounded-md px-3 py-2 text-sm font-medium">Logout</a>
+                                    {% else %}
+                                        <a href="{{ path('app_login') }}" class="text-white hover:bg-indigo-500 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Login</a>
+                                        <a href="{{ path('app_register') }}" class="text-white bg-indigo-500 hover:bg-indigo-400 rounded-md px-3 py-2 text-sm font-medium ml-2">Register</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -48,13 +57,28 @@
             {% endblock %}
 
             {% block main %}
-                <main>
+                <main class="flex-grow">
                     <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+                        {% for label, messages in app.flashes %}
+                            {% for message in messages %}
+                                <div class="bg-{{ label == 'success' ? 'green' : 'red' }}-100 border border-{{ label == 'success' ? 'green' : 'red' }}-400 text-{{ label == 'success' ? 'green' : 'red' }}-700 px-4 py-3 rounded relative mb-4" role="alert">
+                                    <span class="block sm:inline">{{ message }}</span>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
                         <div class="w-full">
                             {% block body %}{% endblock %}
                         </div>
                     </div>
                 </main>
+            {% endblock %}
+
+            {% block footer %}
+                <footer class="bg-gray-800 text-white py-4">
+                    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <p class="text-center">&copy; {{ "now"|date("Y") }} Our Library. All rights reserved.</p>
+                    </div>
+                </footer>
             {% endblock %}
         </div>
     </body>
