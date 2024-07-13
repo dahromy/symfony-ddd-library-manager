@@ -3,7 +3,6 @@
 namespace App\Infrastructure\Framework\Controller;
 
 use App\Application\UseCase\BookUseCase;
-use App\Domain\Entity\Author;
 use App\Domain\Entity\Book;
 use App\Infrastructure\Framework\Form\BookType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,12 +23,13 @@ class BookController extends AbstractController
     #[Route('/books/create', name: 'create_book', methods: ['GET', 'POST'])]
     public function createBook(Request $request): Response
     {
-        $book = new Book('', '', new Author(''));
+        $book = new Book('', '', null);
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->bookUseCase->createBook($book->getTitle(), $book->getIsbn(), $book->getAuthor()->getId());
+            $author = $form->get('author')->getData();
+            $this->bookUseCase->createBook($book->getTitle(), $book->getIsbn(), $author->getId());
             $this->addFlash('success', 'Book created successfully');
             return $this->redirectToRoute('app_book_index');
         }
@@ -48,7 +48,8 @@ class BookController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->bookUseCase->updateBook($id, $book->getTitle(), $book->getIsbn(), $book->getAuthor()->getId());
+            $author = $form->get('author')->getData();
+            $this->bookUseCase->updateBook($id, $book->getTitle(), $book->getIsbn(), $author->getId());
             $this->addFlash('success', 'Book updated successfully');
             return $this->redirectToRoute('app_book_index');
         }
