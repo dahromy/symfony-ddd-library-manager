@@ -9,27 +9,27 @@
                 </ul>
             </div>
         {% endif %}
-        <div class="rounded-md shadow-sm space-y-4">
+        <div class="rounded-md shadow-sm">
             <div>
-                {{ form_widget(form.title) }}
+                {{ form_widget(form.title, {'attr': {'class': form.title.vars.errors|length > 0 ? 'rounded-t-md' : 'rounded-md'}}) }}
                 {% if form.title.vars.errors|length > 0 %}
-                    <div class="bg-white text-red-500 text-xs mt-1 p-2 rounded-b-md border-t-0 border border-red-400">
+                    <div class="bg-white text-red-500 text-xs p-2 {% if loop.last %}rounded-b-md border-b border-l border-r{% else %}border-b border-l border-r{% endif %} border-red-400">
                         {{ form_errors(form.title) }}
                     </div>
                 {% endif %}
             </div>
             <div>
-                {{ form_widget(form.isbn) }}
+                {{ form_widget(form.isbn, {'attr': {'class': form.isbn.vars.errors|length > 0 ? 'rounded-t-md' : 'rounded-md'}}) }}
                 {% if form.isbn.vars.errors|length > 0 %}
-                    <div class="bg-white text-red-500 text-xs mt-1 p-2 rounded-b-md border-t-0 border border-red-400">
+                    <div class="bg-white text-red-500 text-xs p-2 {% if loop.last %}rounded-b-md border-b border-l border-r{% else %}border-b border-l border-r{% endif %} border-red-400">
                         {{ form_errors(form.isbn) }}
                     </div>
                 {% endif %}
             </div>
             <div>
-                {{ form_widget(form.author) }}
+                {{ form_widget(form.author, {'attr': {'class': form.author.vars.errors|length > 0 ? 'rounded-t-md' : 'rounded-md'}}) }}
                 {% if form.author.vars.errors|length > 0 %}
-                    <div class="bg-white text-red-500 text-xs mt-1 p-2 rounded-b-md border-t-0 border border-red-400">
+                    <div class="bg-white text-red-500 text-xs p-2 rounded-b-md border-b border-l border-r border-red-400">
                         {{ form_errors(form.author) }}
                     </div>
                 {% endif %}
