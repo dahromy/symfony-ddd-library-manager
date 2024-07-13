@@ -30,7 +30,8 @@ class BookController extends AbstractController
             $bookData = $form->getData();
             $author = $bookData->getAuthor();
             $authorId = $author ? $author->getId() : null;
-            $this->bookUseCase->createBook($bookData->getTitle(), $bookData->getIsbn(), $authorId);
+            $isbn = $bookData->getIsbn() ?? ''; // Ensure ISBN is not null
+            $this->bookUseCase->createBook($bookData->getTitle(), $isbn, $authorId);
             $this->addFlash('success', 'Book created successfully');
             return $this->redirectToRoute('app_book_index');
         }
@@ -50,7 +51,8 @@ class BookController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $author = $form->get('author')->getData();
-            $this->bookUseCase->updateBook($id, $book->getTitle(), $book->getIsbn(), $author->getId());
+            $isbn = $book->getIsbn() ?? ''; // Ensure ISBN is not null
+            $this->bookUseCase->updateBook($id, $book->getTitle(), $isbn, $author ? $author->getId() : null);
             $this->addFlash('success', 'Book updated successfully');
             return $this->redirectToRoute('app_book_index');
         }
