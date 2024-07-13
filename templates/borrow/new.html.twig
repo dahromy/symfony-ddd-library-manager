@@ -12,3 +12,27 @@
 
     <a href="{{ path('app_borrow_index') }}">back to list</a>
 {% endblock %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Create New Borrow Record{% endblock %}
+
+{% block body %}
+    <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+            <div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                    Create New Borrow Record
+                </h2>
+            </div>
+            {{ component('borrow_form', {
+                borrowRecord: borrowRecord,
+                submitLabel: 'Create Borrow Record'
+            }) }}
+            <div class="text-sm text-center">
+                <a href="{{ path('app_borrow_index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
+                    Back to list
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
