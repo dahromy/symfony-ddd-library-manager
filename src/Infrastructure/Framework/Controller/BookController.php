@@ -23,12 +23,12 @@ class BookController extends AbstractController
     #[Route('/books/create', name: 'create_book', methods: ['GET', 'POST'])]
     public function createBook(Request $request): Response
     {
-        $book = new Book('', '', null);
-        $form = $this->createForm(BookType::class, $book);
+        $form = $this->createForm(BookType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $author = $form->get('author')->getData();
+            $book = $form->getData();
+            $author = $book->getAuthor();
             $authorId = $author ? $author->getId() : null;
             $this->bookUseCase->createBook($book->getTitle(), $book->getIsbn(), $authorId);
             $this->addFlash('success', 'Book created successfully');
