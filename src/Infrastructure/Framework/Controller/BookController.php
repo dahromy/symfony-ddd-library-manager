@@ -30,7 +30,7 @@ class BookController extends AbstractController
 
             $book = $this->bookUseCase->createBook($data['title'], $data['isbn'], $data['author']->getId());
             $this->addFlash('success', 'Book created successfully');
-            return $this->redirectToRoute('book_index');
+            return $this->redirectToRoute('app_book_index');
         }
 
         return $this->render('book/new.html.twig', [
@@ -57,7 +57,7 @@ class BookController extends AbstractController
 
             $this->bookUseCase->updateBook($id, $data['title'], $data['isbn'], $data['author']->getId());
             $this->addFlash('success', 'Book updated successfully');
-            return $this->redirectToRoute('book_index');
+            return $this->redirectToRoute('app_book_index');
         }
 
         return $this->render('book/edit.html.twig', [
@@ -82,7 +82,7 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/books', name: 'book_index', methods: ['GET'])]
+    #[Route('/books', name: 'app_book_index', methods: ['GET'])]
     public function index(): Response
     {
         $books = $this->bookUseCase->getAllBooks();
