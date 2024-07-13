@@ -15,18 +15,18 @@ class BookType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'attr' => ['class' => 'form-control mb-3', 'placeholder' => 'Enter book title'],
-                'label_attr' => ['class' => 'form-label'],
+                'attr' => ['class' => 'form-control', 'placeholder' => 'Enter book title'],
+                'label_attr' => ['class' => 'sr-only'],
             ])
             ->add('isbn', TextType::class, [
-                'attr' => ['class' => 'form-control mb-3', 'placeholder' => 'Enter ISBN'],
-                'label_attr' => ['class' => 'form-label'],
+                'attr' => ['class' => 'form-control', 'placeholder' => 'Enter ISBN'],
+                'label_attr' => ['class' => 'sr-only'],
             ])
             ->add('author', EntityType::class, [
                 'class' => Author::class,
                 'choice_label' => 'name',
-                'attr' => ['class' => 'form-control mb-3'],
-                'label_attr' => ['class' => 'form-label'],
+                'attr' => ['class' => 'form-control'],
+                'label_attr' => ['class' => 'sr-only'],
                 'placeholder' => 'Select an author',
             ]);
     }

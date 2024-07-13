@@ -10,9 +10,23 @@
                     <div class="card-body">
                         <h1 class="h3 mb-3 font-weight-normal text-center">Edit Book</h1>
 
-                        {{ form_start(form) }}
-                            {{ form_widget(form) }}
-                            <button type="submit" class="btn btn-lg btn-primary btn-block mt-3">Update Book</button>
+                        {{ form_start(form, {'attr': {'class': 'form-signin'}}) }}
+                            <div class="form-label-group mb-3">
+                                {{ form_widget(form.title) }}
+                                {{ form_label(form.title) }}
+                            </div>
+
+                            <div class="form-label-group mb-3">
+                                {{ form_widget(form.isbn) }}
+                                {{ form_label(form.isbn) }}
+                            </div>
+
+                            <div class="form-label-group mb-3">
+                                {{ form_widget(form.author) }}
+                                {{ form_label(form.author) }}
+                            </div>
+
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Update Book</button>
                         {{ form_end(form) }}
 
                         <div class="text-center mt-3">
