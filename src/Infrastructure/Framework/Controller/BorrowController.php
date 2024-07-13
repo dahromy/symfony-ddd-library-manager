@@ -37,8 +37,8 @@ class BorrowController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $borrowRecord = $this->borrowUseCase->borrowBook($data['book']->getId(), $data['borrowerName']);
+            $borrowRecord = $form->getData();
+            $this->borrowUseCase->borrowBook($borrowRecord->getBook()->getId(), $borrowRecord->getBorrowerName());
             return $this->redirectToRoute('app_borrow_show', ['id' => $borrowRecord->getId()], Response::HTTP_SEE_OTHER);
         }
 
