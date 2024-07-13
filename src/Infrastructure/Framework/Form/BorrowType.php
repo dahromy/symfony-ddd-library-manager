@@ -4,6 +4,7 @@ namespace App\Infrastructure\Framework\Form;
 
 use App\Domain\Entity\BorrowRecord;
 use App\Domain\Entity\Book;
+use App\Domain\Entity\Author;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -30,8 +31,9 @@ class BorrowType extends AbstractType
             $form = $event->getForm();
 
             if (!$borrowRecord || null === $borrowRecord->getId()) {
+                $tempAuthor = new \App\Domain\Entity\Author('Temporary Author');
                 $borrowRecord = new BorrowRecord(
-                    new Book('', ''), // Temporary Book instance
+                    new Book('Temporary Title', 'Temporary ISBN', $tempAuthor), // Temporary Book instance
                     '',
                     new \DateTime()
                 );
