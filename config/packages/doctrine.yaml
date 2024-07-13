@@ -1,11 +1,6 @@
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
-
-        # IMPORTANT: You MUST configure your server version,
-        # either here or in the DATABASE_URL env var (see .env file)
-        #server_version: '16'
-
         profiling_collect_backtrace: '%kernel.debug%'
         use_savepoints: true
     orm:
@@ -15,17 +10,16 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
-            AppInfrastructure:
-                type: attribute
+            App:
+                type: xml
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Infrastructure/Persistence/Doctrine/Entity'
-                prefix: 'App\Infrastructure\Persistence\Doctrine\Entity'
-                alias: AppInfrastructure
+                dir: '%kernel.project_dir%/config/doctrine'
+                prefix: 'App\Domain\Entity'
+                alias: App
 
 when@test:
     doctrine:
         dbal:
-            # "TEST_TOKEN" is typically set by ParaTest
             dbname_suffix: '_test%env(default::TEST_TOKEN)%'
 
 when@prod:

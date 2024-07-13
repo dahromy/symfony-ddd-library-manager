@@ -46,5 +46,8 @@ services:
     App\Domain\Repository\BorrowRecordRepositoryInterface:
         class: App\Infrastructure\Persistence\Doctrine\BorrowRecordRepository
 
+    App\Domain\Repository\UserRepositoryInterface:
+        class: App\Infrastructure\Persistence\Doctrine\UserRepository
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

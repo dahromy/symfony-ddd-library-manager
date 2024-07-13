@@ -42,12 +42,18 @@ class BookController extends AbstractController
     public function updateBook(int $id, Request $request): Response
     {
         $book = $this->bookUseCase->getBook($id);
-        $form = $this->createForm(BookType::class, $book);
+        $form = $this->createForm(BookType::class, [
+            'title' => $book->getTitle(),
+            'isbn' => $book->getIsbn(),
+            'author' => $book->getAuthor()
+        ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $this->bookUseCase->updateBook($id, $data['title'], $data['isbn'], $data['authorId']);
+
+            $this->bookUseCase->updateBook($id, $data['title'], $data['isbn'], $data['author']->getId());
             $this->addFlash('success', 'Book updated successfully');
             return $this->redirectToRoute('get_all_books');
         }

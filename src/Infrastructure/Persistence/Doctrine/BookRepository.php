@@ -4,8 +4,6 @@ namespace App\Infrastructure\Persistence\Doctrine;
 
 use App\Domain\Entity\Book;
 use App\Domain\Repository\BookRepositoryInterface;
-use App\Infrastructure\Persistence\Doctrine\Entity\BookEntity;
-use App\Infrastructure\Persistence\Doctrine\Entity\AuthorEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -13,45 +11,28 @@ class BookRepository extends ServiceEntityRepository implements BookRepositoryIn
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, BookEntity::class);
+        parent::__construct($registry, Book::class);
     }
 
     public function findById(int $id): ?Book
     {
-        $bookEntity = $this->find($id);
-        return $bookEntity ? $bookEntity->toDomainEntity() : null;
+        return $this->find($id);
     }
 
     public function findAll(): array
     {
-        return array_map(
-            fn(BookEntity $bookEntity) => $bookEntity->toDomainEntity(),
-            $this->findBy([])
-        );
+        return $this->findBy([]);
     }
 
     public function save(Book $book): void
     {
-        $bookEntity = $this->getEntityManager()->find(BookEntity::class, $book->getId()) 
-            ?? BookEntity::fromDomainEntity($book);
-        
-        $bookEntity->setTitle($book->getTitle());
-        $bookEntity->setIsbn($book->getIsbn());
-        
-        $authorEntity = $this->getEntityManager()->find(AuthorEntity::class, $book->getAuthor()->getId()) 
-            ?? AuthorEntity::fromDomainEntity($book->getAuthor());
-        $bookEntity->setAuthor($authorEntity);
-        
-        $this->getEntityManager()->persist($bookEntity);
+        $this->getEntityManager()->persist($book);
         $this->getEntityManager()->flush();
     }
 
     public function delete(Book $book): void
     {
-        $bookEntity = $this->getEntityManager()->find(BookEntity::class, $book->getId());
-        if ($bookEntity) {
-            $this->getEntityManager()->remove($bookEntity);
-            $this->getEntityManager()->flush();
-        }
+        $this->getEntityManager()->remove($book);
+        $this->getEntityManager()->flush();
     }
 }
