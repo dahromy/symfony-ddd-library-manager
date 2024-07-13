@@ -1,14 +1,17 @@
 <div {{ attributes }}>
-    {{ form_start(form, {'attr': {'class': 'mt-8 space-y-6'}}) }}
+    {{ form_start(form, {'attr': {'class': 'mt-8 space-y-6', 'novalidate': 'novalidate'}}) }}
         <div class="rounded-md shadow-sm -space-y-px">
             <div>
                 {{ form_widget(form.title) }}
+                {{ form_errors(form.title) }}
             </div>
             <div>
                 {{ form_widget(form.isbn) }}
+                {{ form_errors(form.isbn) }}
             </div>
             <div>
                 {{ form_widget(form.author) }}
+                {{ form_errors(form.author) }}
             </div>
         </div>
 
