@@ -3,37 +3,37 @@
 {% block title %}Create New Book{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card mt-5">
-                    <div class="card-body">
-                        <h1 class="h3 mb-3 font-weight-normal text-center">Create New Book</h1>
-
-                        {{ form_start(form, {'attr': {'class': 'form-signin'}}) }}
-                            <div class="form-label-group mb-3">
-                                {{ form_widget(form.title) }}
-                                {{ form_label(form.title) }}
-                            </div>
-
-                            <div class="form-label-group mb-3">
-                                {{ form_widget(form.isbn) }}
-                                {{ form_label(form.isbn) }}
-                            </div>
-
-                            <div class="form-label-group mb-3">
-                                {{ form_widget(form.author) }}
-                                {{ form_label(form.author) }}
-                            </div>
-
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">Create Book</button>
-                        {{ form_end(form) }}
-
-                        <div class="text-center mt-3">
-                            <a href="{{ path('get_all_books') }}" class="text-primary">Back to list</a>
-                        </div>
+    <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+            <div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                    Create New Book
+                </h2>
+            </div>
+            {{ form_start(form, {'attr': {'class': 'mt-8 space-y-6'}}) }}
+                <div class="rounded-md shadow-sm -space-y-px">
+                    <div>
+                        {{ form_widget(form.title) }}
+                    </div>
+                    <div>
+                        {{ form_widget(form.isbn) }}
+                    </div>
+                    <div>
+                        {{ form_widget(form.author) }}
                     </div>
                 </div>
+
+                <div>
+                    <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Create Book
+                    </button>
+                </div>
+            {{ form_end(form) }}
+
+            <div class="text-sm text-center">
+                <a href="{{ path('get_all_books') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
+                    Back to list
+                </a>
             </div>
         </div>
     </div>
