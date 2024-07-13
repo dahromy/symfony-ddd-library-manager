@@ -11,7 +11,7 @@
         {% endif %}
         <div class="rounded-md shadow-sm">
             <div>
-                {{ form_widget(form.title, {'attr': {'class': 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 ' ~ (form.title.vars.errors|length > 0 ? 'rounded-t-md' : 'rounded-md') ~ ' focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'}}) }}
+                {{ form_widget(form.title) }}
                 {% if form.title.vars.errors|length > 0 %}
                     <div class="bg-white text-red-500 text-xs p-2 {% if loop.last %}rounded-b-md border-b border-l border-r{% else %}border-b border-l border-r{% endif %} border-red-400">
                         {{ form_errors(form.title) }}
@@ -19,7 +19,7 @@
                 {% endif %}
             </div>
             <div>
-                {{ form_widget(form.isbn, {'attr': {'class': 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 ' ~ (form.isbn.vars.errors|length > 0 ? 'rounded-t-md' : 'rounded-md') ~ ' focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'}}) }}
+                {{ form_widget(form.isbn) }}
                 {% if form.isbn.vars.errors|length > 0 %}
                     <div class="bg-white text-red-500 text-xs p-2 {% if loop.last %}rounded-b-md border-b border-l border-r{% else %}border-b border-l border-r{% endif %} border-red-400">
                         {{ form_errors(form.isbn) }}
@@ -27,7 +27,7 @@
                 {% endif %}
             </div>
             <div>
-                {{ form_widget(form.author, {'attr': {'class': 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 ' ~ (form.author.vars.errors|length > 0 ? 'rounded-t-md' : 'rounded-md') ~ ' focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'}}) }}
+                {{ form_widget(form.author) }}
                 {% if form.author.vars.errors|length > 0 %}
                     <div class="bg-white text-red-500 text-xs p-2 rounded-b-md border-b border-l border-r border-red-400">
                         {{ form_errors(form.author) }}
