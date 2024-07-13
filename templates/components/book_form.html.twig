@@ -1,17 +1,38 @@
 <div {{ attributes }}>
     {{ form_start(form, {'attr': {'class': 'mt-8 space-y-6', 'novalidate': 'novalidate'}}) }}
+        {% if form.vars.errors|length > 0 %}
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <ul>
+                    {% for error in form.vars.errors %}
+                        <li>{{ error.message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
         <div class="rounded-md shadow-sm -space-y-px">
             <div>
                 {{ form_widget(form.title) }}
-                {{ form_errors(form.title) }}
+                {% if form.title.vars.errors|length > 0 %}
+                    <div class="text-red-500 text-xs mt-1">
+                        {{ form_errors(form.title) }}
+                    </div>
+                {% endif %}
             </div>
             <div>
                 {{ form_widget(form.isbn) }}
-                {{ form_errors(form.isbn) }}
+                {% if form.isbn.vars.errors|length > 0 %}
+                    <div class="text-red-500 text-xs mt-1">
+                        {{ form_errors(form.isbn) }}
+                    </div>
+                {% endif %}
             </div>
             <div>
                 {{ form_widget(form.author) }}
-                {{ form_errors(form.author) }}
+                {% if form.author.vars.errors|length > 0 %}
+                    <div class="text-red-500 text-xs mt-1">
+                        {{ form_errors(form.author) }}
+                    </div>
+                {% endif %}
             </div>
         </div>
 
