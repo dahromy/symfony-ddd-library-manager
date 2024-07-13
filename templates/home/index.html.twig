@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome to the Library Management System{% endblock %}
+
+{% block body %}
+    <h1>Welcome to the Library Management System</h1>
+    <p>This is your central hub for managing books, authors, and borrowing records.</p>
+    <ul>
+        <li><a href="{{ path('get_all_books') }}">View all books</a></li>
+        <li><a href="{{ path('get_all_authors') }}">View all authors</a></li>
+        <li><a href="{{ path('get_all_borrow_records') }}">View all borrow records</a></li>
+    </ul>
+{% endblock %}

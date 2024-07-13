@@ -15,3 +15,7 @@ author_routes:
 borrow_routes:
     resource: ../src/Infrastructure/Framework/Controller/BorrowController.php
     type: attribute
+
+home_routes:
+    resource: ../src/Infrastructure/Framework/Controller/HomeController.php
+    type: attribute
