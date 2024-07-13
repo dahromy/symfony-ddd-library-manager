@@ -9,6 +9,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 
 class BorrowType extends AbstractType
 {
@@ -22,6 +24,20 @@ class BorrowType extends AbstractType
             ->add('borrowerName', TextType::class, [
                 'label' => 'Borrower Name',
             ]);
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $borrowRecord = $event->getData();
+            $form = $event->getForm();
+
+            if (!$borrowRecord || null === $borrowRecord->getId()) {
+                $borrowRecord = new BorrowRecord(
+                    new Book('', ''), // Temporary Book instance
+                    '',
+                    new \DateTime()
+                );
+                $event->setData($borrowRecord);
+            }
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void
