@@ -12,8 +12,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/borrow')]
 class BorrowController extends AbstractController
 {
-    private BorrowUseCase $borrowUseCase;
-
     public function __construct(
         private BorrowUseCase $borrowUseCase,
         private BookRepositoryInterface $bookRepository

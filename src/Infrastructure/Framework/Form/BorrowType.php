@@ -45,10 +45,11 @@ class BorrowType extends AbstractType
                 $book = $bookRepository->find($data['book']);
 
                 if ($book) {
+                    $borrowDate = isset($data['borrowDate']) ? new \DateTime($data['borrowDate']) : new \DateTime();
                     $borrowRecord = new BorrowRecord(
                         $book,
-                        $data['borrowerName'],
-                        new \DateTime($data['borrowDate'])
+                        $data['borrowerName'] ?? '',
+                        $borrowDate
                     );
                     $form->setData($borrowRecord);
                 }
