@@ -31,9 +31,7 @@ class BorrowController extends AbstractController
     #[Route('/new', name: 'app_borrow_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
-        $form = $this->createForm(BorrowType::class, null, [
-            'book_repository' => $this->bookRepository,
-        ]);
+        $form = $this->createForm(BorrowType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
