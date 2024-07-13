@@ -13,8 +13,8 @@
         </div>
 
         <div class="flex space-x-4">
-            <a href="{{ path('update_book', {'id': book.id}) }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300">Edit</a>
-            <a href="{{ path('get_all_books') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-300">Back to list</a>
+            <a href="{{ path('update_book', {'id': book.id}) }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Edit</a>
+            <a href="{{ path('get_all_books') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Back to list</a>
         </div>
     </div>
 {% endblock %}
