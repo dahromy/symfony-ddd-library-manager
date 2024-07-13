@@ -41,12 +41,17 @@ class BorrowType extends AbstractType
             $form = $event->getForm();
 
             if (!$form->getData() instanceof BorrowRecord) {
-                $borrowRecord = new BorrowRecord(
-                    $form->get('book')->getData(),
-                    $data['borrowerName'],
-                    new \DateTime($data['borrowDate'])
-                );
-                $form->setData($borrowRecord);
+                $bookRepository = $form->getConfig()->getOption('book_repository');
+                $book = $bookRepository->find($data['book']);
+
+                if ($book) {
+                    $borrowRecord = new BorrowRecord(
+                        $book,
+                        $data['borrowerName'],
+                        new \DateTime($data['borrowDate'])
+                    );
+                    $form->setData($borrowRecord);
+                }
             }
         });
     }
@@ -56,5 +61,6 @@ class BorrowType extends AbstractType
         $resolver->setDefaults([
             'data_class' => BorrowRecord::class,
         ]);
+        $resolver->setRequired('book_repository');
     }
 }
