@@ -7,12 +7,10 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>📚</text></svg>">
         {% block stylesheets %}
             {{ importmap('app') }}
-            <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
         {% endblock %}
 
         {% block javascripts %}
             {{ importmap('app') }}
-            <script src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@7.1.0/dist/turbo.es2017-umd.min.js"></script>
             <script>
                 Turbo.session.drive = false;
                 document.addEventListener('turbo:load', () => {
