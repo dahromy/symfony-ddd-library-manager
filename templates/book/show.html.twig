@@ -3,18 +3,34 @@
 {% block title %}Book Details{% endblock %}
 
 {% block body %}
-    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
-        <h1 class="text-3xl font-semibold mb-6 text-gray-800">Book Details</h1>
+    <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+            <div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                    Book Details
+                </h2>
+            </div>
+            <div class="mt-8 space-y-6">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-2">{{ book.title }}</h2>
+                    <p class="text-gray-600 mb-1"><span class="font-semibold">ISBN:</span> {{ book.isbn }}</p>
+                    <p class="text-gray-600"><span class="font-semibold">Author:</span> {{ book.author.name }}</p>
+                </div>
 
-        <div class="mb-6">
-            <h2 class="text-2xl font-semibold text-gray-700 mb-2">{{ book.title }}</h2>
-            <p class="text-gray-600 mb-1"><span class="font-semibold">ISBN:</span> {{ book.isbn }}</p>
-            <p class="text-gray-600"><span class="font-semibold">Author:</span> {{ book.author.name }}</p>
-        </div>
+                <div>
+                    <a href="{{ path('update_book', {id: book.id}) }}"
+                       class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Edit
+                    </a>
+                </div>
+            </div>
 
-        <div class="flex space-x-4">
-            <a href="{{ path('update_book', {'id': book.id}) }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Edit</a>
-            <a href="{{ path('get_all_books') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Back to list</a>
+            <div class="text-sm text-center">
+                <a href="{{ path('get_all_books') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
+                    Back to list
+                </a>
+            </div>
         </div>
     </div>
 {% endblock %}
+
