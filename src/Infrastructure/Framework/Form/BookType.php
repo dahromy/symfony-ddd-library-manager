@@ -8,10 +8,13 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Isbn;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Type;
 
 class BookType extends AbstractType
 {
@@ -24,6 +27,7 @@ class BookType extends AbstractType
                 'label_attr' => ['class' => 'sr-only'],
                 'constraints' => [
                     new NotBlank(['message' => 'Please enter a title']),
+                    new NotNull(['message' => 'Please enter a title']),
                     new Length(['min' => 2, 'max' => 255, 'minMessage' => 'The title must be at least {{ limit }} characters long', 'maxMessage' => 'The title cannot be longer than {{ limit }} characters']),
                 ],
             ])
@@ -33,6 +37,7 @@ class BookType extends AbstractType
                 'label_attr' => ['class' => 'sr-only'],
                 'constraints' => [
                     new NotBlank(['message' => 'Please enter an ISBN']),
+                    new NotNull(['message'=> 'Please enter an ISBN']),
                     new Isbn(['message' => 'This is not a valid ISBN']),
                 ],
             ])
@@ -43,7 +48,14 @@ class BookType extends AbstractType
                 'label' => 'Author',
                 'label_attr' => ['class' => 'sr-only'],
                 'placeholder' => 'Select an author',
-                'required' => false,
+                'constraints' => [
+                    new NotBlank(['message' => 'Please select an author']),
+                    new NotNull(['message' => 'Please select an author']),
+                    new Type([
+                        'type' => Author::class,
+                        'message' => 'The selected author is invalid',
+                    ])
+                ],
             ]);
     }
 
