@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_borrow_return', {'id': borrow_record.id}) }}" onsubmit="return confirm('Are you sure you want to return this book?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('return' ~ borrow_record.id) }}">
+    <button class="btn">Return</button>
+</form>

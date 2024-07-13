@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Borrow Record{% endblock %}
+
+{% block body %}
+    <h1>Borrow Record</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ borrow_record.id }}</td>
+            </tr>
+            <tr>
+                <th>Book</th>
+                <td>{{ borrow_record.book.title }}</td>
+            </tr>
+            <tr>
+                <th>Borrower</th>
+                <td>{{ borrow_record.borrowerName }}</td>
+            </tr>
+            <tr>
+                <th>Borrow Date</th>
+                <td>{{ borrow_record.borrowDate ? borrow_record.borrowDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Return Date</th>
+                <td>{{ borrow_record.returnDate ? borrow_record.returnDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_borrow_index') }}">back to list</a>
+
+    {% if not borrow_record.returnDate %}
+        {{ include('borrow/_return_form.html.twig') }}
+    {% endif %}
+{% endblock %}
