@@ -22,20 +22,19 @@ class BookController extends AbstractController
     #[Route('/books/create', name: 'create_book', methods: ['GET', 'POST'])]
     public function createBook(Request $request): Response
     {
-        $form = $this->createForm(BookType::class);
+        $book = new Book('', '', new Author(''));
+        $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-
-            $book = $this->bookUseCase->createBook($data['title'], $data['isbn'], $data['author']->getId());
+            $this->bookUseCase->createBook($book->getTitle(), $book->getIsbn(), $book->getAuthor()->getId());
             $this->addFlash('success', 'Book created successfully');
             return $this->redirectToRoute('app_book_index');
         }
 
         return $this->render('book/new.html.twig', [
             'form' => $form->createView(),
-            'book' => null,
+            'book' => $book,
         ]);
     }
 
@@ -43,19 +42,11 @@ class BookController extends AbstractController
     public function updateBook(int $id, Request $request): Response
     {
         $book = $this->bookUseCase->getBook($id);
-
-        $form = $this->createForm(BookType::class, [
-            'title' => $book->getTitle(),
-            'isbn' => $book->getIsbn(),
-            'author' => $book->getAuthor()
-        ]);
-
+        $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-
-            $this->bookUseCase->updateBook($id, $data['title'], $data['isbn'], $data['author']->getId());
+            $this->bookUseCase->updateBook($id, $book->getTitle(), $book->getIsbn(), $book->getAuthor()->getId());
             $this->addFlash('success', 'Book updated successfully');
             return $this->redirectToRoute('app_book_index');
         }
