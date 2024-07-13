@@ -10,7 +10,7 @@
         </id>
 
         <field name="title" type="string" length="255"/>
-        <field name="isbn" type="string" length="13" unique="true"/>
+        <field name="isbn" type="string" length="15" unique="true"/>
 
         <many-to-one field="author" target-entity="App\Domain\Entity\Author" inversed-by="books">
             <join-column name="author_id" referenced-column-name="id" nullable="false"/>

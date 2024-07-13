@@ -7,6 +7,7 @@ use App\Infrastructure\Framework\Form\BookType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
+use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
@@ -16,10 +17,17 @@ class BookForm extends AbstractController
     use ComponentWithFormTrait;
     use DefaultActionTrait;
 
-    public Book $book;
+    public ?Book $book = null;
+
+    #[LiveProp]
+    public ?string $submitLabel = null;
 
     protected function instantiateForm(): FormInterface
     {
-        return $this->createForm(BookType::class, $this->book);
+        return $this->createForm(BookType::class, [
+            'title' => $this->book?->getTitle(),
+            'isbn' => $this->book?->getIsbn(),
+            'author' => $this->book?->getAuthor(),
+        ]);
     }
 }

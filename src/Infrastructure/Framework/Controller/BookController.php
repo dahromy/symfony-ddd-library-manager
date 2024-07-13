@@ -35,6 +35,7 @@ class BookController extends AbstractController
 
         return $this->render('book/new.html.twig', [
             'form' => $form->createView(),
+            'book' => null,
         ]);
     }
 
@@ -42,6 +43,7 @@ class BookController extends AbstractController
     public function updateBook(int $id, Request $request): Response
     {
         $book = $this->bookUseCase->getBook($id);
+
         $form = $this->createForm(BookType::class, [
             'title' => $book->getTitle(),
             'isbn' => $book->getIsbn(),
