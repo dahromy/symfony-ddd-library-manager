@@ -17,7 +17,7 @@ class BookUseCase
         $this->authorRepository = $authorRepository;
     }
 
-    public function createBook(string $title, string $isbn, int $authorId): Book
+    public function createBook(string $title, string $isbn, ?int $authorId = null): Book
     {
         if (empty(trim($title))) {
             throw new \InvalidArgumentException("Book title cannot be empty");
@@ -26,9 +26,12 @@ class BookUseCase
             throw new \InvalidArgumentException("ISBN cannot be empty");
         }
 
-        $author = $this->authorRepository->findById($authorId);
-        if (!$author) {
-            throw new \RuntimeException("Author not found");
+        $author = null;
+        if ($authorId !== null) {
+            $author = $this->authorRepository->findById($authorId);
+            if (!$author) {
+                throw new \RuntimeException("Author not found");
+            }
         }
 
         $book = new Book($title, $isbn, $author);
