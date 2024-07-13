@@ -3,38 +3,18 @@
 {% block title %}Book Details{% endblock %}
 
 {% block body %}
-    <h1 class="text-3xl font-bold mb-4">Book Details</h1>
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-3xl font-semibold mb-6 text-gray-800">Book Details</h1>
 
-    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-        <div class="px-4 py-5 sm:px-6">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">
-                {{ book.title }}
-            </h3>
+        <div class="mb-6">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-2">{{ book.title }}</h2>
+            <p class="text-gray-600 mb-1"><span class="font-semibold">ISBN:</span> {{ book.isbn }}</p>
+            <p class="text-gray-600"><span class="font-semibold">Author:</span> {{ book.author.name }}</p>
         </div>
-        <div class="border-t border-gray-200">
-            <dl>
-                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">
-                        ISBN
-                    </dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                        {{ book.isbn }}
-                    </dd>
-                </div>
-                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">
-                        Author
-                    </dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                        {{ book.author.name }}
-                    </dd>
-                </div>
-            </dl>
-        </div>
-    </div>
 
-    <div class="mt-4">
-        <a href="{{ path('update_book', {'id': book.id}) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</a>
-        <a href="{{ path('get_all_books') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">Back to list</a>
+        <div class="flex space-x-4">
+            <a href="{{ path('update_book', {'id': book.id}) }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300">Edit</a>
+            <a href="{{ path('get_all_books') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-300">Back to list</a>
+        </div>
     </div>
 {% endblock %}
