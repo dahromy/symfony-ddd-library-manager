@@ -19,17 +19,24 @@ class BookType extends AbstractType
         $builder
             ->add('title', TextType::class, [
                 'label' => 'Book Title',
-                'attr' => ['placeholder' => 'Enter book title'],
+                'attr' => [
+                    'placeholder' => 'Enter book title',
+                    'class' => 'form-control',
+                ],
             ])
             ->add('isbn', TextType::class, [
                 'label' => 'ISBN',
-                'attr' => ['placeholder' => 'Enter ISBN'],
+                'attr' => [
+                    'placeholder' => 'Enter ISBN',
+                    'class' => 'form-control',
+                ],
             ])
             ->add('author', EntityType::class, [
                 'class' => Author::class,
                 'choice_label' => 'name',
                 'label' => 'Author',
                 'placeholder' => 'Select an author',
+                'attr' => ['class' => 'form-control'],
             ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -40,12 +47,18 @@ class BookType extends AbstractType
             if (!$book || null === $book->getId()) {
                 $form->add('title', TextType::class, [
                     'label' => 'Book Title',
-                    'attr' => ['placeholder' => 'Enter book title'],
+                    'attr' => [
+                        'placeholder' => 'Enter book title',
+                        'class' => 'form-control',
+                    ],
                     'empty_data' => '',
                 ]);
                 $form->add('isbn', TextType::class, [
                     'label' => 'ISBN',
-                    'attr' => ['placeholder' => 'Enter ISBN'],
+                    'attr' => [
+                        'placeholder' => 'Enter ISBN',
+                        'class' => 'form-control',
+                    ],
                     'empty_data' => '',
                 ]);
             }

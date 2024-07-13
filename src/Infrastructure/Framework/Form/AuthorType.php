@@ -17,7 +17,10 @@ class AuthorType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Author Name',
-                'attr' => ['placeholder' => 'Enter author name'],
+                'attr' => [
+                    'placeholder' => 'Enter author name',
+                    'class' => 'form-control',
+                ],
             ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -28,7 +31,10 @@ class AuthorType extends AbstractType
             if (!$author || null === $author->getId()) {
                 $form->add('name', TextType::class, [
                     'label' => 'Author Name',
-                    'attr' => ['placeholder' => 'Enter author name'],
+                    'attr' => [
+                        'placeholder' => 'Enter author name',
+                        'class' => 'form-control',
+                    ],
                     'empty_data' => '',
                 ]);
             }
