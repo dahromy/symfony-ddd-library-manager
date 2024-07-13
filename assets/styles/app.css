@@ -3,3 +3,18 @@
 @tailwind utilities;
 
 /* Custom styles */
+body {
+    @apply bg-gray-50;
+}
+
+h1, h2 {
+    @apply text-gray-800;
+}
+
+a {
+    @apply transition-colors duration-200;
+}
+
+.container {
+    @apply max-w-4xl;
+}

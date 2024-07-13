@@ -1,13 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Welcome to the Library Management System{% endblock %}
+{% block title %}Welcome to Our Library{% endblock %}
 
 {% block body %}
-    <h1>Welcome to the Library Management System</h1>
-    <p>This is your central hub for managing books, authors, and borrowing records.</p>
-    <ul>
-        <li><a href="{{ path('get_all_books') }}">View all books</a></li>
-        <li><a href="{{ path('get_all_authors') }}">View all authors</a></li>
-        <li><a href="{{ path('get_all_borrow_records') }}">View all borrow records</a></li>
-    </ul>
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold mb-6 text-center">Welcome to Our Library</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+            <h2 class="text-2xl font-semibold mb-4">Manage Your Library</h2>
+            <p class="mb-4">Explore our comprehensive library management tools:</p>
+            <ul class="space-y-2">
+                <li><a href="{{ path('get_all_books') }}" class="text-blue-600 hover:underline">📚 Browse Books</a></li>
+                <li><a href="{{ path('get_all_authors') }}" class="text-blue-600 hover:underline">✍️ Explore Authors</a></li>
+                <li><a href="{{ path('get_all_borrow_records') }}" class="text-blue-600 hover:underline">📅 View Borrowing Records</a></li>
+            </ul>
+        </div>
+        
+        <div>
+            <h2 class="text-2xl font-semibold mb-4">Featured Books</h2>
+            <ul class="space-y-2">
+                {% for book in featuredBooks %}
+                    <li class="bg-gray-100 p-3 rounded">
+                        <span class="font-medium">{{ book.title }}</span> by {{ book.author }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}

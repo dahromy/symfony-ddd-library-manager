@@ -11,6 +11,14 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home', methods: ['GET'])]
     public function index(): Response
     {
-        return $this->render('home/index.html.twig');
+        $featuredBooks = [
+            ['title' => 'To Kill a Mockingbird', 'author' => 'Harper Lee'],
+            ['title' => '1984', 'author' => 'George Orwell'],
+            ['title' => 'Pride and Prejudice', 'author' => 'Jane Austen'],
+        ];
+
+        return $this->render('home/index.html.twig', [
+            'featuredBooks' => $featuredBooks,
+        ]);
     }
 }
