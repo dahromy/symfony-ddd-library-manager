@@ -70,11 +70,15 @@ class BookType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Book::class,
             'empty_data' => function ($form) {
-                return new Book(
-                    $form->get('title')->getData() ?? '',
-                    $form->get('isbn')->getData() ?? '',
-                    $form->get('author')->getData()
-                );
+                $title = $form->get('title')->getData();
+                $isbn = $form->get('isbn')->getData();
+                $author = $form->get('author')->getData();
+
+                if ($title !== null && $isbn !== null && $author !== null) {
+                    return new Book($title, $isbn, $author);
+                }
+
+                return null;
             },
         ]);
     }
