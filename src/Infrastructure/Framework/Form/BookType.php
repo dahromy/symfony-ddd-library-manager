@@ -43,9 +43,7 @@ class BookType extends AbstractType
                 'label' => 'Author',
                 'label_attr' => ['class' => 'sr-only'],
                 'placeholder' => 'Select an author',
-                'constraints' => [
-                    new NotBlank(['message' => 'Please select an author']),
-                ],
+                'required' => false,
             ]);
     }
 

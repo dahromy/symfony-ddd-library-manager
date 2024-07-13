@@ -23,7 +23,7 @@ class BookController extends AbstractController
     #[Route('/books/create', name: 'create_book', methods: ['GET', 'POST'])]
     public function createBook(Request $request): Response
     {
-        $book = new Book('', '');
+        $book = new Book('', '', null);
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
