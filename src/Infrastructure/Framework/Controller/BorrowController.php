@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Framework\Controller;
 
 use App\Application\UseCase\BorrowUseCase;
+use App\Domain\Repository\BookRepositoryInterface;
 use App\Infrastructure\Framework\Form\BorrowType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
