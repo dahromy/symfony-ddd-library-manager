@@ -31,7 +31,7 @@ class BorrowType extends AbstractType
             $form = $event->getForm();
 
             if (!$borrowRecord || null === $borrowRecord->getId()) {
-                $tempAuthor = new \App\Domain\Entity\Author('Temporary Author');
+                $tempAuthor = new Author('Temporary Author');
                 $borrowRecord = new BorrowRecord(
                     new Book('Temporary Title', 'Temporary ISBN', $tempAuthor), // Temporary Book instance
                     '',
