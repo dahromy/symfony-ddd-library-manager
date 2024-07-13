@@ -15,11 +15,14 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Isbn;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Type;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 
 class BookType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'onPreSubmit']);
         $builder
             ->add('title', TextType::class, [
                 'attr' => ['class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm', 'placeholder' => 'Enter book title'],
@@ -71,5 +74,25 @@ class BookType extends AbstractType
                 );
             },
         ]);
+    }
+
+    public function onPreSubmit(FormEvent $event)
+    {
+        $data = $event->getData();
+        
+        // Ensure ISBN is not null
+        if (!isset($data['isbn']) || $data['isbn'] === null) {
+            $data['isbn'] = '';
+        }
+
+        // Trim whitespace from title and ISBN
+        if (isset($data['title'])) {
+            $data['title'] = trim($data['title']);
+        }
+        if (isset($data['isbn'])) {
+            $data['isbn'] = trim($data['isbn']);
+        }
+
+        $event->setData($data);
     }
 }
