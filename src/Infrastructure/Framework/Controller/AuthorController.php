@@ -41,6 +41,7 @@ class AuthorController extends AbstractController
 
         return $this->render('author/new.html.twig', [
             'form' => $form,
+            'author' => null
         ]);
     }
 

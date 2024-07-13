@@ -1,13 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Author{% endblock %}
+{% block title %}Create New Author{% endblock %}
 
 {% block body %}
-    <h1>Edit Author</h1>
-
-    {{ include('author/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_author_index') }}">back to list</a>
-
-    {{ include('author/_delete_form.html.twig') }}
+    <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+            <div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                    Edit Author
+                </h2>
+            </div>
+            {{ component('author_form', {
+                author: author,
+                submitLabel: 'Update Author'
+            }) }}
+            <div class="text-sm text-center">
+                <a href="{{ path('app_author_index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
+                    Back to list
+                </a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
