@@ -39,7 +39,8 @@ class BorrowController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $borrowRecord = $form->getData();
             $this->borrowUseCase->borrowBook($borrowRecord->getBook()->getId(), $borrowRecord->getBorrowerName());
-            return $this->redirectToRoute('app_borrow_show', ['id' => $borrowRecord->getId()], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Book borrowed successfully.');
+            return $this->redirectToRoute('app_borrow_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('borrow/new.html.twig', [
