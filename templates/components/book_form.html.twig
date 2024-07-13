@@ -13,7 +13,7 @@
             <div>
                 {{ form_widget(form.title) }}
                 {% if form.title.vars.errors|length > 0 %}
-                    <div class="bg-white text-red-500 text-xs p-2 {% if loop.last %}rounded-b-md border-b border-l border-r{% else %}border-b border-l border-r{% endif %} border-red-400">
+                    <div class="bg-white text-red-500 text-xs p-2 border-b border-l border-r border-red-400">
                         {{ form_errors(form.title) }}
                     </div>
                 {% endif %}
@@ -21,7 +21,7 @@
             <div>
                 {{ form_widget(form.isbn) }}
                 {% if form.isbn.vars.errors|length > 0 %}
-                    <div class="bg-white text-red-500 text-xs p-2 {% if loop.last %}rounded-b-md border-b border-l border-r{% else %}border-b border-l border-r{% endif %} border-red-400">
+                    <div class="bg-white text-red-500 text-xs p-2 border-b border-l border-r border-red-400">
                         {{ form_errors(form.isbn) }}
                     </div>
                 {% endif %}
@@ -29,7 +29,7 @@
             <div>
                 {{ form_widget(form.author) }}
                 {% if form.author.vars.errors|length > 0 %}
-                    <div class="bg-white text-red-500 text-xs p-2 rounded-b-md border-b border-l border-r border-red-400">
+                    <div class="bg-white text-red-500 text-xs p-2 border-b border-l border-r border-red-400">
                         {{ form_errors(form.author) }}
                     </div>
                 {% endif %}
