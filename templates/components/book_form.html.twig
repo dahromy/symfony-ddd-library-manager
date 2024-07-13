@@ -28,6 +28,7 @@
             </div>
             <div>
                 {{ form_widget(form.author, {attr: {
+                    ...form.author.vars.attr,
                     class: form.author.vars.attr.class ~ (form.author.vars.errors|length > 0 ? ' rounded-b-none' : '')
                 }}) }}
                 {% if form.author.vars.errors|length > 0 %}

@@ -7,9 +7,9 @@ class Book
     private ?int $id = null;
     private string $title;
     private string $isbn;
-    private ?Author $author = null;
+    private Author $author;
 
-    public function __construct(string $title, string $isbn, ?Author $author = null)
+    public function __construct(string $title, string $isbn, Author $author)
     {
         $this->title = $title;
         $this->isbn = $isbn;
@@ -46,7 +46,7 @@ class Book
         return $this->author;
     }
 
-    public function setAuthor(?Author $author): void
+    public function setAuthor(Author $author): void
     {
         $this->author = $author;
     }

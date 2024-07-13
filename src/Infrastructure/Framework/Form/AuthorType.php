@@ -17,28 +17,12 @@ class AuthorType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Author Name',
+                'empty_data' => '',
                 'attr' => [
                     'placeholder' => 'Enter author name',
                     'class' => 'form-control',
                 ],
             ]);
-
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $author = $event->getData();
-            $form = $event->getForm();
-
-            // Check if this is a new Author (no id set)
-            if (!$author || null === $author->getId()) {
-                $form->add('name', TextType::class, [
-                    'label' => 'Author Name',
-                    'attr' => [
-                        'placeholder' => 'Enter author name',
-                        'class' => 'form-control',
-                    ],
-                    'empty_data' => '',
-                ]);
-            }
-        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void

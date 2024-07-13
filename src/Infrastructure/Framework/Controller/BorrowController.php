@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Framework\Controller;
 
 use App\Application\UseCase\BorrowUseCase;
-use App\Domain\Repository\BookRepositoryInterface;
+use App\Domain\Entity\BorrowRecord;
 use App\Infrastructure\Framework\Form\BorrowType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,10 +13,8 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/borrow')]
 class BorrowController extends AbstractController
 {
-    public function __construct(
-        private BorrowUseCase $borrowUseCase,
-        private BookRepositoryInterface $bookRepository
-    ) {
+    public function __construct(private BorrowUseCase $borrowUseCase)
+    {
     }
 
     #[Route('/', name: 'app_borrow_index', methods: ['GET'])]
@@ -35,6 +33,7 @@ class BorrowController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var BorrowRecord $borrowRecord */
             $borrowRecord = $form->getData();
             $this->borrowUseCase->borrowBook($borrowRecord->getBook()->getId(), $borrowRecord->getBorrowerName());
             $this->addFlash('success', 'Book borrowed successfully.');
@@ -58,7 +57,7 @@ class BorrowController extends AbstractController
     #[Route('/{id}/return', name: 'app_borrow_return', methods: ['POST'])]
     public function returnBook(Request $request, int $id): Response
     {
-        if ($this->isCsrfTokenValid('return'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('return' . $id, $request->request->get('_token'))) {
             $this->borrowUseCase->returnBook($id);
         }
 
