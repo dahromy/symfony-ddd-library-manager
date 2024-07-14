@@ -6,25 +6,24 @@ This project is a Library Management System built with Symfony, implementing Dom
 
 The Library Management System allows users to manage books, authors, and borrowing records. It provides functionalities for creating, updating, and deleting books and authors, as well as managing book borrowing and returns.
 
-## Use Cases Schema
+## Use Cases
 
-```mermaid
-graph TD
-    A[User] --> B[Manage Authors]
-    A --> C[Manage Books]
-    A --> D[Manage Borrowing]
-    B --> B1[Create Author]
-    B --> B2[Update Author]
-    B --> B3[Delete Author]
-    B --> B4[View Author]
-    C --> C1[Create Book]
-    C --> C2[Update Book]
-    C --> C3[Delete Book]
-    C --> C4[View Book]
-    D --> D1[Borrow Book]
-    D --> D2[Return Book]
-    D --> D3[View Borrowing Records]
-```
+1. Manage Authors
+   - Create Author
+   - Update Author
+   - Delete Author
+   - View Author
+
+2. Manage Books
+   - Create Book
+   - Update Book
+   - Delete Book
+   - View Book
+
+3. Manage Borrowing
+   - Borrow Book
+   - Return Book
+   - View Borrowing Records
 
 ## How to Run the Project
 
