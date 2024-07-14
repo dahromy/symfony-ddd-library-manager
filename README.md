@@ -8,11 +8,10 @@ The Library Management System allows users to manage books, authors, and borrowi
 
 ## Technologies Used
 
-- PHP 8.1+
-- Symfony 6.x
+- PHP 8.2+
+- Symfony 7.1
 - Doctrine ORM
 - Twig Template Engine
-- PHPUnit for testing
 - Composer for dependency management
 
 ## Use Cases
