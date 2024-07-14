@@ -1,10 +1,6 @@
-# symfony-ddd-library-manager
+# Library Management System
 
 This project is a Library Management System built with Symfony, implementing Domain-Driven Design (DDD) and Clean Architecture principles. It was created as a collaborative effort using aider and Claude 3.5 Sonnet to test the capabilities of these AI-assisted development tools.
-
-## Repository Name
-
-The GitHub repository for this project is named `symfony-ddd-library-manager`, reflecting its use of Symfony, Domain-Driven Design, and its purpose as a Library Management System.
 
 ## Project Overview
 
