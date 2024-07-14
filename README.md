@@ -83,3 +83,56 @@ Please read CONTRIBUTING.md for details on our code of conduct and the process f
 ## License
 
 This project is licensed under the MIT License - see the LICENSE.md file for details.
+
+## Project Structure
+
+```
+library-management-system/
+├── bin/
+│   ├── console
+│   └── phpunit
+├── config/
+│   ├── packages/
+│   ├── routes/
+│   ├── bundles.php
+│   ├── preload.php
+│   ├── routes.yaml
+│   └── services.yaml
+├── migrations/
+├── public/
+│   └── index.php
+├── src/
+│   ├── Application/
+│   │   └── UseCase/
+│   ├── Domain/
+│   │   ├── Entity/
+│   │   └── Repository/
+│   ├── Infrastructure/
+│   │   ├── Framework/
+│   │   │   ├── Controller/
+│   │   │   ├── Form/
+│   │   │   └── Twig/
+│   │   ├── Persistence/
+│   │   │   └── Doctrine/
+│   │   └── Security/
+│   └── Kernel.php
+├── templates/
+│   ├── author/
+│   ├── book/
+│   ├── borrow/
+│   ├── components/
+│   ├── home/
+│   ├── security/
+│   └── base.html.twig
+├── tests/
+├── translations/
+├── .env
+├── .env.local
+├── .gitignore
+├── composer.json
+├── composer.lock
+├── phpunit.xml.dist
+└── README.md
+```
+
+This structure reflects the Domain-Driven Design and Clean Architecture principles used in the project.
