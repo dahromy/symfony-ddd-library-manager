@@ -1,6 +1,6 @@
 # Library Management System
 
-This project is a Library Management System built with Symfony, implementing Domain-Driven Design (DDD) and Clean Architecture principles. It was created as a collaborative effort using aider and Claude 3.5 Sonnet to test the capabilities of these AI-assisted development tools.
+This project is a Library Management System built with Symfony, implementing Domain-Driven Design (DDD) and Clean Architecture principles. It was created as a collaborative effort using [aider](https://github.com/paul-gauthier/aider) and Claude 3.5 Sonnet to test the capabilities of these AI-assisted development tools.
 
 ## Project Overview
 
