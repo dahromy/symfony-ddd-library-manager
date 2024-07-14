@@ -7,20 +7,17 @@ use App\Domain\Repository\BorrowRecordRepositoryInterface;
 use App\Domain\Repository\BookRepositoryInterface;
 use DateTime;
 
-class BorrowUseCase
+readonly class BorrowUseCase
 {
-    private BorrowRecordRepositoryInterface $borrowRecordRepository;
-    private BookRepositoryInterface $bookRepository;
 
-    public function __construct(BorrowRecordRepositoryInterface $borrowRecordRepository, BookRepositoryInterface $bookRepository)
+    public function __construct(private BorrowRecordRepositoryInterface $borrowRecordRepository, private BookRepositoryInterface $bookRepository)
     {
-        $this->borrowRecordRepository = $borrowRecordRepository;
-        $this->bookRepository = $bookRepository;
     }
 
     public function borrowBook(int $bookId, string $borrowerName): BorrowRecord
     {
         $book = $this->bookRepository->findById($bookId);
+
         if (!$book) {
             throw new \RuntimeException("Book not found");
         }
@@ -31,12 +28,17 @@ class BorrowUseCase
 
         $borrowRecord = new BorrowRecord($book, $borrowerName, new DateTime());
         $this->borrowRecordRepository->save($borrowRecord);
+
         return $borrowRecord;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function returnBook(int $borrowRecordId): BorrowRecord
     {
         $borrowRecord = $this->borrowRecordRepository->findById($borrowRecordId);
+
         if (!$borrowRecord) {
             throw new \Exception("Borrow record not found");
         }
@@ -47,12 +49,17 @@ class BorrowUseCase
 
         $borrowRecord->setReturnDate(new DateTime());
         $this->borrowRecordRepository->save($borrowRecord);
+
         return $borrowRecord;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function getBorrowRecord(int $id): BorrowRecord
     {
         $borrowRecord = $this->borrowRecordRepository->findById($id);
+
         if (!$borrowRecord) {
             throw new \Exception("Borrow record not found");
         }

@@ -7,16 +7,14 @@ use DateTime;
 class BorrowRecord
 {
     private ?int $id = null;
-    private Book $book;
-    private string $borrowerName;
-    private DateTime $borrowDate;
     private ?DateTime $returnDate = null;
 
-    public function __construct(Book $book, string $borrowerName, DateTime $borrowDate)
+    public function __construct(
+        private readonly Book      $book,
+        private readonly string    $borrowerName,
+        private readonly ?DateTime $borrowDate = null
+    )
     {
-        $this->book = $book;
-        $this->borrowerName = $borrowerName;
-        $this->borrowDate = $borrowDate;
     }
 
     public function getId(): ?int

@@ -12,17 +12,16 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/author')]
 class AuthorController extends AbstractController
 {
-    private AuthorUseCase $authorUseCase;
 
-    public function __construct(AuthorUseCase $authorUseCase)
+    public function __construct(private readonly AuthorUseCase $authorUseCase)
     {
-        $this->authorUseCase = $authorUseCase;
     }
 
     #[Route('/', name: 'app_author_index', methods: ['GET'])]
     public function index(): Response
     {
         $authors = $this->authorUseCase->getAllAuthors();
+
         return $this->render('author/index.html.twig', [
             'authors' => $authors,
         ]);
@@ -45,19 +44,27 @@ class AuthorController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     #[Route('/{id}', name: 'app_author_show', methods: ['GET'])]
     public function show(int $id): Response
     {
         $author = $this->authorUseCase->getAuthor($id);
+
         return $this->render('author/show.html.twig', [
             'author' => $author,
         ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     #[Route('/{id}/edit', name: 'app_author_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, int $id): Response
     {
         $author = $this->authorUseCase->getAuthor($id);
+
         $form = $this->createForm(AuthorType::class, $author);
         $form->handleRequest($request);
 
@@ -72,6 +79,9 @@ class AuthorController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     #[Route('/{id}', name: 'app_author_delete', methods: ['POST'])]
     public function delete(Request $request, int $id): Response
     {

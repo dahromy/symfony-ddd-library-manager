@@ -13,11 +13,9 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class BookController extends AbstractController
 {
-    private BookUseCase $bookUseCase;
 
-    public function __construct(BookUseCase $bookUseCase)
+    public function __construct(private readonly BookUseCase $bookUseCase)
     {
-        $this->bookUseCase = $bookUseCase;
     }
 
     #[Route('/books/create', name: 'create_book', methods: ['GET', 'POST'])]
@@ -28,7 +26,9 @@ class BookController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $bookData = $form->getData();
+
             $this->bookUseCase->createBook($bookData->getTitle(), $bookData->getIsbn(), $bookData->getAuthor()->getId());
+
             $this->addFlash('success', 'Book created successfully');
             return $this->redirectToRoute('app_book_index');
         }
@@ -39,15 +39,20 @@ class BookController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     #[Route('/books/{id}/update', name: 'update_book', methods: ['GET', 'POST'])]
     public function updateBook(int $id, Request $request): Response
     {
         $book = $this->bookUseCase->getBook($id);
+
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->bookUseCase->updateBook($id, $book->getTitle(), $book->getIsbn(), $book->getAuthor()->getId());
+
             $this->addFlash('success', 'Book updated successfully');
             return $this->redirectToRoute('app_book_index');
         }
@@ -58,6 +63,9 @@ class BookController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     #[Route('/books/{id}/delete', name: 'delete_book', methods: ['DELETE'])]
     public function deleteBook(int $id): JsonResponse
     {
@@ -65,6 +73,9 @@ class BookController extends AbstractController
         return $this->json(['message' => 'Book deleted successfully']);
     }
 
+    /**
+     * @throws \Exception
+     */
     #[Route('/books/{id}', name: 'get_book', methods: ['GET'])]
     public function getBook(int $id): Response
     {

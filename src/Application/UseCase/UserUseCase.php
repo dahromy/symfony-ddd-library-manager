@@ -6,15 +6,11 @@ use App\Domain\Entity\User;
 use App\Domain\Repository\UserRepositoryInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class UserUseCase
+readonly class UserUseCase
 {
-    private UserRepositoryInterface $userRepository;
-    private UserPasswordHasherInterface $passwordHasher;
 
-    public function __construct(UserRepositoryInterface $userRepository, UserPasswordHasherInterface $passwordHasher)
+    public function __construct(private UserRepositoryInterface $userRepository, private UserPasswordHasherInterface $passwordHasher)
     {
-        $this->userRepository = $userRepository;
-        $this->passwordHasher = $passwordHasher;
     }
 
     public function createUser(string $email, string $plainPassword, array $roles = []): User

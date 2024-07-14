@@ -15,11 +15,9 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class SecurityController extends AbstractController
 {
-    private UserUseCase $userUseCase;
 
-    public function __construct(UserUseCase $userUseCase)
+    public function __construct(private readonly UserUseCase $userUseCase)
     {
-        $this->userUseCase = $userUseCase;
     }
 
     #[Route('/login', name: 'app_login')]

@@ -5,15 +5,9 @@ namespace App\Domain\Entity;
 class Book
 {
     private ?int $id = null;
-    private string $title;
-    private string $isbn;
-    private Author $author;
 
-    public function __construct(string $title, string $isbn, Author $author)
+    public function __construct(private string $title, private string $isbn, private Author $author)
     {
-        $this->title = $title;
-        $this->isbn = $isbn;
-        $this->author = $author;
     }
 
     public function getId(): ?int

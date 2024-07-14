@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/borrow')]
 class BorrowController extends AbstractController
 {
-    public function __construct(private BorrowUseCase $borrowUseCase)
+    public function __construct(private readonly BorrowUseCase $borrowUseCase)
     {
     }
 
@@ -21,6 +21,7 @@ class BorrowController extends AbstractController
     public function index(): Response
     {
         $borrowRecords = $this->borrowUseCase->getAllBorrowRecords();
+
         return $this->render('borrow/index.html.twig', [
             'borrow_records' => $borrowRecords,
         ]);
@@ -36,6 +37,7 @@ class BorrowController extends AbstractController
             /** @var BorrowRecord $borrowRecord */
             $borrowRecord = $form->getData();
             $this->borrowUseCase->borrowBook($borrowRecord->getBook()->getId(), $borrowRecord->getBorrowerName());
+
             $this->addFlash('success', 'Book borrowed successfully.');
             return $this->redirectToRoute('app_borrow_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -46,6 +48,9 @@ class BorrowController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     #[Route('/{id}', name: 'app_borrow_show', methods: ['GET'])]
     public function show(int $id): Response
     {
@@ -55,6 +60,9 @@ class BorrowController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     #[Route('/{id}/return', name: 'app_borrow_return', methods: ['POST'])]
     public function returnBook(Request $request, int $id): Response
     {

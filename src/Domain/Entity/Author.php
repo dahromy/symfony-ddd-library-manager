@@ -8,12 +8,10 @@ use Doctrine\Common\Collections\Collection;
 class Author
 {
     private ?int $id = null;
-    private string $name;
     private Collection $books;
 
-    public function __construct(string $name)
+    public function __construct(private string $name)
     {
-        $this->name = $name;
         $this->books = new ArrayCollection();
     }
 

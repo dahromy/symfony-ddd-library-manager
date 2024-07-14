@@ -17,7 +17,7 @@ class AuthorFixtures extends Fixture
         $this->authorRepository = $authorRepository;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $faker = Factory::create();
 
