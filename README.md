@@ -1,10 +1,19 @@
 # Library Management System
 
-This project is a Library Management System built with Symfony, implementing Domain-Driven Design (DDD) and Clean Architecture principles.
+This project is a Library Management System built with Symfony, implementing Domain-Driven Design (DDD) and Clean Architecture principles. It was created as a collaborative effort using aider and Claude 3.5 Sonnet to test the capabilities of these AI-assisted development tools.
 
 ## Project Overview
 
 The Library Management System allows users to manage books, authors, and borrowing records. It provides functionalities for creating, updating, and deleting books and authors, as well as managing book borrowing and returns.
+
+## Technologies Used
+
+- PHP 8.1+
+- Symfony 6.x
+- Doctrine ORM
+- Twig Template Engine
+- PHPUnit for testing
+- Composer for dependency management
 
 ## Use Cases
 
