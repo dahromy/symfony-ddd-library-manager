@@ -1,21 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Author Details{% endblock %}
+{% block title %}Author: {{ author.name }}{% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
-        <h1 class="mb-4">Author Details</h1>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1 class="mb-4 text-center">Author Profile</h1>
 
-        <div class="card">
-            <div class="card-body">
-                <h2 class="card-title">{{ author.name }}</h2>
-                <p class="card-text"><strong>ID:</strong> {{ author.id }}</p>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="card-title text-primary mb-3">{{ author.name }}</h2>
+                        <p class="card-text"><strong>Author ID:</strong> {{ author.id }}</p>
+                        
+                        {% if author.books is defined and author.books|length > 0 %}
+                            <h3 class="mt-4 mb-3">Books by this Author</h3>
+                            <ul class="list-group">
+                                {% for book in author.books %}
+                                    <li class="list-group-item">{{ book.title }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="text-muted mt-3">No books listed for this author.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="mt-4 text-center">
+                    <a href="{{ path('app_author_index') }}" class="btn btn-secondary me-2">Back to List</a>
+                    <a href="{{ path('app_author_edit', {'id': author.id}) }}" class="btn btn-primary">Edit Author</a>
+                </div>
             </div>
-        </div>
-
-        <div class="mt-4">
-            <a href="{{ path('app_author_index') }}" class="btn btn-secondary">Back to List</a>
-            <a href="{{ path('app_author_edit', {'id': author.id}) }}" class="btn btn-primary">Edit</a>
         </div>
     </div>
 {% endblock %}
