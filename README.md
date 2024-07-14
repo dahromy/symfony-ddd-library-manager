@@ -72,11 +72,6 @@ php bin/phpunit
 
 ## Additional Commands
 
-- To create a new user:
-  ```
-  php bin/console app:create-user
-  ```
-
 - To clear cache:
   ```
   php bin/console cache:clear
